@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'sg_fundarpe.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nome_do_banco_de_dados',
+        'NAME': 'gerenciamento_fundarpe',
         'USER': 'root',
         'PASSWORD': '123123',
         'HOST': 'localhost',   # Ou o endereço do seu servidor MySQL
