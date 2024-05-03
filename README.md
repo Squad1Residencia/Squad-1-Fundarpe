@@ -18,7 +18,7 @@ git clone https://github.com/Squad1Residencia/Squad-1-Fundarpe.git
 ```
 ### Acesse a pasta do projeto no terminal
 ```
-cd sg_fundarpe
+cd <caminho>/sg_fundarpe
 ```
 ### Crie um ambiente virtual chamado "myenv"
 ```
