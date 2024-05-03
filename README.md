@@ -8,6 +8,8 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 - [Python 3](https://www.python.org/downloads/)
 - [MySQL](https://dev.mysql.com/downloads/installer/)
 - [Visual Studio Code](https://code.visualstudio.com/Download)
+> [!TIP]
+> Ao instalar recomendo adicionar o python e o mysql ao ``PATH`` do sistema.
 
 ## 🚀 Como executar o projeto
 ### Clone este repositório
@@ -20,7 +22,7 @@ cd sg_fundarpe
 ```
 ### Crie um ambiente virtual chamado "myenv"
 ```
-virtualenv myenv
+python -m venv myenv
 ```
 ### Ative o ambiente virtual
 ```
@@ -30,11 +32,17 @@ myenv\Scripts\activate
 ```
 $ pip install -r requirements.txt
 ```
+>[!important]
+>Se ele não encontrar o ``requirementes.txt``, você provavelmente está no nível errado do projeto.
+> Execute ``cd ..`` no terminal ou navegue para ``<caminho>\Squad-1-Fundarpe`` e tente novamente.
 ## 🎲Configurando o Banco de Dados
-### Acesse o MySQL
+### Acesse o MySQL 
 ```
 mysql -u root -p
 ```
+Após executar o comando digite a senha do ``root``.
+>[!important]
+>Em caso de erro: ``'mysql' não é um termo reconhecido ...``, o MySQL provavelmente não está no ``PATH`` do Sistema.  A partir disso ou você pode adicioná-lo ao ``PATH`` ou Localizar o diretório de instalação do MySQL e executar lá. Geralmente o caminho é algo como:  ``C:\Program Files\MySQL\MySQL Server 8.0\bin``. Navegue para ```cd <caminho>\MySQL Server 8.0\bin``` e execute o comando acima.
 ### Crie um novo banco de dados
 ```sql
 mysql> CREATE DATABASE gerenciamento_fundarpe;
