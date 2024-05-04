@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário</title>
+</head>
+<body>
+  <h1>Formulário Generico</h1>
+
+  <form action="{% url 'salvar' %}" id="formularioProjeto" method="post">
+    {% csrf_token %}
+    <label for="n_projeto">Nº do Projeto:</label>
+    <input type="number" id="n_projeto" name="n_projeto" required><br>
+
+    <label for="titulo_projeto">Titulo do Projeto:</label>
+    <input type="text" id="titulo_projeto" name="titulo_projeto" required><br>
+
+    <label for="n_sei">N° do SEI:</label>
+    <input type="number" id="n_sei" name="n_sei" required><br>
+
+    <label for="n_empenho">N° do Empenho:</label>
+    <input type="number" id="n_empenho" name="n_empenho" required><br>
+
+    <label for="data_solicitacao">Data da Solicitação:</label>
+    <input type="date" id="data_solicitacao" name="data_solicitacao" required><br>
+
+    <label for="status_projeto">Status do Projeto:</label>
+    <input type="text" id="status_projeto" name="status_projeto" required><br>
+
+    <label for="n_termoaceite">N° do Termo de Aceite:</label>
+    <input type="number" id="n_termoaceite" name="n_termoaceite" required><br>
+
+    <label for="responsavel_termo">Responsável pelo Termo:</label>
+    <input type="text" id="responsavel_termo" name="responsavel_termo" required><br>
+
+    <button type="submit">Enviar</button>
+  </form>
+  <div id="resultado"></div>
+  <script>
+    document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
+      document.getElementById("resultado").innerText = "enviado com sucesso!";
+
+    });
+  </script>
+
+  <div>
+    <h2>Projetos: </h2>
+    <ul>
+    <!-- Implementacao do READ com um for. -->
+    {% for projeto in projetos %}
+      <li>{{ projeto.n_projeto }} - {{ projeto.titulo_projeto }} <a href="{% url 'editar' projeto.n_projeto %}">Editar</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+
+
+</body>
+</html>

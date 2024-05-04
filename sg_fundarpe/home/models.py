@@ -10,10 +10,16 @@ class Projeto(models.Model):
     n_termoaceite = models.CharField(max_length=255)
     reponsavel_termo = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.titulo_projeto
+    
 class Usuario(models.Model):
     id_usuario = models.CharField(max_length=255, primary_key=True)
     senha = models.CharField(max_length=255)
     departamento = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.id_usuario
 
 class Operacao(models.Model):
     id_operacao = models.IntegerField(primary_key=True)
@@ -23,9 +29,15 @@ class Operacao(models.Model):
     status_operacao = models.CharField(max_length=255)
     nome_operacao = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.nome_operacao
+
 class Pagamento(models.Model):
     n_projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE)
     valor_solicitado = models.DecimalField(max_digits=10, decimal_places=2)
     n_parcelas = models.PositiveSmallIntegerField()
     status_pagamento = models.TextField()
     descricao = models.TextField()
+
+    def __str__(self):
+        return self.n_projeto.titulo_projeto
