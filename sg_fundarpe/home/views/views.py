@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from ..models import Projeto
-#from .forms import ProjetoForm
 
 
 def homepage(request):
