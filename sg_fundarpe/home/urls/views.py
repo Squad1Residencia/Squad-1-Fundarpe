@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Projeto
+from ..models import Projeto
 #from .forms import ProjetoForm
 
 
