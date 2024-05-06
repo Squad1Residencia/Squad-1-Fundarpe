@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script>
+        function mostrarSenha(){
+            var x = document.getElementById("boxSenha")
+            if (x.type === "password"){
+                x.type = "text";
+            }
+            else{
+                x.type = "password";
+            }
+        }
+    </script>
+    <title>Login</title>
+</head>
+<body>
+
+    <div class="container">
+        <form method="post" class="formulario" spellcheck="false">
+            
+            <div class="logo">
+                <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logomarca Fundarpe">
+            </div>
+            
+            <div class="elementos">
+                <label for="nome">Nome</label>
+                <input type="name" placeholder="Nome do usuário" autofocus="true">
+            </div>
+
+            <div class="elementos">
+                <label for="senha">Senha</label>
+                <input type="password" placeholder="Senha do usuário" id="boxSenha">
+            </div>
+
+            <div class="elementos">
+                <label class="switch">
+                    <input type="checkbox" name="switch" onclick="mostrarSenha()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <label for="switch" class="frase_caixa">Mostrar senha!</label>
+
+            <div class="elementos">
+                <label class="switch">
+                    <input type="checkbox" name="switch">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <label for="caixa" class="frase_caixa">Mantenha-me conectado!</label>
+
+            <div class="elementos">
+                <input type="submit" value="Entrar" class="botão">
+            </div>
+            
+            <div class="elementos">
+                <a href="/" class="alinhado1">Esqueceu sua senha?</a>
+            </div>
+
+        
+        </form>
+    </div>
+
+</body>
+</html>
