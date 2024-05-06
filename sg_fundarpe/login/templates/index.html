@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <script>
         function mostrarSenha(){
             var x = document.getElementById("boxSenha")
@@ -24,7 +25,7 @@
         <form method="post" class="formulario" spellcheck="false">
             
             <div class="logo">
-                <img src="culturape-big-brand.png" alt="">
+                <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logomarca Fundarpe">
             </div>
             
             <div class="elementos">
