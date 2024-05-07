@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundarpe - SEJU</title>
+</head>
+<body>
+  <h1>SEJU</h1>
+  <div>
+    <h2>Projetos: </h2>
+    <ul>
+    <!-- Implementacao do READ com um for. -->
+    {% for projeto in projetos %}
+    <li>
+      {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
+      <a href="#">Editar</a>
+    </li>
+  {% endfor %}
+    </ul>
+  </div>
+
+  <h2>Cadastrar Projeto</h2>
+  <form action="{% url 'funcaoquevocecriou' %}" id="formularioProjeto" method="post">
+    {% csrf_token %}
+    <label for="Exemplo">Exemplo:</label>
+    <input type="text" id="Exemplo" name="Exemplo" required><br>
+
+
+    <button type="submit">Enviar</button>
+  </form>
+  <div id="resultado"></div>
+  <script>
+    document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
+      document.getElementById("resultado").innerText = "enviado com sucesso!";
+
+    });
+  </script>
+ 
+</body>
+</html>
