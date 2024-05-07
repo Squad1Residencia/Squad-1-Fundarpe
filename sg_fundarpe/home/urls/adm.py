@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.urls import path
-from home.views.asgo import *
+from home.views.adm import *
 
 urlpatterns = [
-       path('', homepage, name = 'asgo'),
+       path('', homepage, name = 'adm'),
 
 ]       
