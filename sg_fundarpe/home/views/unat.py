@@ -1,14 +1,23 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden, HttpResponse
 from home.models import Projeto, Pagamento
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
 
-
+@login_required
 def homepage(request):
+    # Verificar se o usuário pertence ao departamento 'unat'
+    if request.user.departamento != 'unat':
+        return HttpResponseForbidden()
+
     projetos = Projeto.objects.all() 
     return render(request, 'home/unat.html', {'projetos': projetos})
 
-
+@login_required
 def cadastrar_projeto(request):
+    # Verificar se o usuário pertence ao departamento 'unat'
+    if request.user.departamento != 'unat':
+        return HttpResponseForbidden()
+
     if request.method == 'POST':
         n_projeto = request.POST.get('n_projeto')
         titulo_projeto = request.POST.get('titulo_projeto')
@@ -22,8 +31,13 @@ def cadastrar_projeto(request):
         return redirect('unat')
     else:
         return HttpResponse("Erro ao cadastrar o projeto", status=400)
-    
+
+@login_required
 def atualizar_projeto(request, n_projeto):
+    # Verificar se o usuário pertence ao departamento 'unat'
+    if request.user.departamento != 'unat':
+        return HttpResponseForbidden()
+
     if request.method == 'POST':
         n_projeto = request.POST.get('n_projeto')
         titulo_projeto = request.POST.get('titulo_projeto')
@@ -39,9 +53,3 @@ def atualizar_projeto(request, n_projeto):
 
         pagamento = Pagamento.objects.get(n_projeto_id=n_projeto)
         pagamento.valor_solicitado = valor_solicitado
-        pagamento.n_parcelas = n_parcelas
-        pagamento.save()
-
-        return redirect('unat')
-    else:
-        return HttpResponse("Erro ao atualizar o projeto", status=400)

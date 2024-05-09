@@ -1,25 +1,29 @@
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 
+
+class Usuario(AbstractUser):
+    id_usuario = models.AutoField(primary_key=True)
+    departamento = models.CharField(max_length=255)
+    precisa_redefinir_senha = models.BooleanField(default=True)
+    groups = models.ManyToManyField(Group, related_name='usuario_groups', blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name='usuario_permissions', blank=True)
+
+    def __str__(self):
+        return str(self.id_usuario)
+    
 class Projeto(models.Model):
     n_projeto = models.IntegerField(primary_key=True)
     titulo_projeto = models.TextField()
     n_sei = models.IntegerField()
-    n_empenho = models.CharField(max_length=255)
-    data_solicitacao = models.DateField()
-    status_projeto = models.CharField(max_length=255)
-    n_termoaceite = models.CharField(max_length=255)
-    reponsavel_termo = models.CharField(max_length=255)
+    n_empenho = models.CharField(max_length=255, null=True)
+    data_solicitacao = models.DateField(null=True)
+    status_projeto = models.CharField(max_length=255, null=True)
+    n_termoaceite = models.CharField(max_length=255, null=True)
+    reponsavel_termo = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return self.titulo_projeto
-    
-class Usuario(models.Model):
-    id_usuario = models.CharField(max_length=255, primary_key=True)
-    senha = models.CharField(max_length=255)
-    departamento = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.id_usuario
 
 class Operacao(models.Model):
     id_operacao = models.IntegerField(primary_key=True)
@@ -36,8 +40,9 @@ class Pagamento(models.Model):
     n_projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE)
     valor_solicitado = models.DecimalField(max_digits=10, decimal_places=2)
     n_parcelas = models.PositiveSmallIntegerField()
-    status_pagamento = models.TextField()
-    descricao = models.TextField()
+    status_pagamento = models.TextField(null=True)
+    descricao = models.TextField(null=True)
 
     def __str__(self):
         return self.n_projeto.titulo_projeto
+    

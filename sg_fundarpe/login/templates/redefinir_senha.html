@@ -1,4 +1,5 @@
 {% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,36 +9,43 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <script>
         function mostrarSenha(){
-            var x = document.getElementById("boxSenha")
-            if (x.type === "password"){
-                x.type = "text";
-            }
-            else{
-                x.type = "password";
+            var senha1 = document.getElementById("boxSenha1");
+            var senha2 = document.getElementById("boxSenha2");
+            if (senha1.type === "password") {
+                senha1.type = "text";
+                senha2.type = "text";
+            } else {
+                senha1.type = "password";
+                senha2.type = "password";
             }
         }
     </script>
-    <title>Login</title>
+    <title>Redefinir Senha</title>
 </head>
 <body>
 
     <div class="container">
         <form method="post" class="formulario" spellcheck="false">
-            
+            {% csrf_token %}
             <div class="logo">
                 <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logomarca Fundarpe">
             </div>
-            
+            Determine uma nova senha para sua conta.
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+    
             <div class="elementos">
-                <label for="nome">Nome</label>
-                <input type="name" placeholder="Nome do usuário" autofocus="true">
+                <label for="senha">Nova Senha</label>
+                <input type="password" name="nova_senha" placeholder="Digite a nova senha" id="boxSenha1">
             </div>
 
             <div class="elementos">
-                <label for="senha">Senha</label>
-                <input type="password" placeholder="Senha do usuário" id="boxSenha">
+                <label for="senha">Confirmar Senha</label>
+                <input type="password" name="confirmar_senha" placeholder="Confirme a nova senha" id="boxSenha2">
             </div>
-
+            <!-- Resto do seu código -->
+    
             <div class="elementos">
                 <label class="switch">
                     <input type="checkbox" name="switch" onclick="mostrarSenha()">
@@ -45,24 +53,14 @@
                 </label>
             </div>
             <label for="switch" class="frase_caixa">Mostrar senha!</label>
-
+    
             <div class="elementos">
-                <label class="switch">
-                    <input type="checkbox" name="switch">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <label for="caixa" class="frase_caixa">Mantenha-me conectado!</label>
-
-            <div class="elementos">
-                <input type="submit" value="Entrar" class="botão">
+                <input type="submit" value="Redefinir Senha" class="botão">
             </div>
             
             <div class="elementos">
-                <a href="/" class="alinhado1">Esqueceu sua senha?</a>
+                <a href="{% url 'login' %}" class="alinhado1">Voltar para o login</a>
             </div>
-
-        
         </form>
     </div>
 
