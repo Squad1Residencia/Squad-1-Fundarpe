@@ -26,7 +26,7 @@ class Projeto(models.Model):
         return self.titulo_projeto
 
 class Operacao(models.Model):
-    id_operacao = models.IntegerField(primary_key=True)
+    id_operacao = models.AutoField(primary_key=True)
     n_projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE)
     id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     data_operacao = models.DateField()

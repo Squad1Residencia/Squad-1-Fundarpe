@@ -9,7 +9,7 @@
   <h1>Usuários</h1>
   <ul>
   {% for user in users %}
-      <li>{{ user.username }} - Departamento: {{ user.departamento }}</li>
+      <li>{{ user.id_usuario }} - {{ user.username }} - Departamento: {{ user.departamento }}</li>
   {% endfor %}
   </ul>
 
