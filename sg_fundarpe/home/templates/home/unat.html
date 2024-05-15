@@ -19,6 +19,7 @@
       }
     }
   </script>
+  <link rel="stylesheet" href="static/unat.css">
   <style>
     #myInput {
       padding: 12px;
@@ -61,24 +62,36 @@
   <h2>Cadastrar Projeto</h2>
   <form action="{% url 'cadastrar_projeto' %}" id="formularioProjeto" method="post">
     {% csrf_token %}
-    <label for="n_projeto">Nº do Projeto:</label>
-    <input type="number" id="n_projeto" name="n_projeto" required><br>
 
-    <label for="titulo_projeto">Titulo do Projeto:</label>
-    <input type="text" id="titulo_projeto" name="titulo_projeto" required><br>
+    <div class="elementos">
+      <label for="n_projeto">Nº do Projeto:</label>
+      <input type="number" id="n_projeto" name="n_projeto" required><br>
+    </div>
 
-    <label for="n_sei">N° do SEI:</label>
-    <input type="number" id="n_sei" name="n_sei" required><br>
+    <div class="elementos">
+      <label for="titulo_projeto">Titulo do Projeto:</label>
+      <input type="text" id="titulo_projeto" name="titulo_projeto" required><br>
+    </div>
 
-    <label for="valor_solicitado">Valor solicitado:</label>
-    <input type="number" id="valor_solicitado" name="valor_solicitado" step="0.01" required><br>
+    <div class="elementos">
+      <label for="n_sei">N° do SEI:</label>
+      <input type="number" id="n_sei" name="n_sei" required><br>
+    </div>
 
-    <label for="n_parcelas">Número de Parcelas:</label>
-    <input type="number" id="n_parcelas" name="n_parcelas" required><br>
+    <div class="elementos">
+      <label for="valor_solicitado">Valor solicitado:</label>
+      <input type="number" id="valor_solicitado" name="valor_solicitado" step="0.01" required><br>
+    </div>
 
-   
+    <div class="elementos">
+      <label for="n_parcelas">Número de Parcelas:</label>
+      <input type="number" id="n_parcelas" name="n_parcelas" required><br>
+    </div>
 
-    <button type="submit">Enviar</button>
+    <div class="elementos">
+      <button type="submit">Enviar</button>
+    </div>
+  
   </form>
   <div id="resultado"></div>
   <script>
