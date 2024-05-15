@@ -15,8 +15,8 @@ class Usuario(AbstractUser):
 class Projeto(models.Model):
     n_projeto = models.IntegerField(primary_key=True)
     titulo_projeto = models.TextField()
-    n_sei = models.IntegerField()
-    n_empenho = models.CharField(max_length=255, null=True)
+    n_sei = models.CharField(max_length=21)
+    n_empenho = models.CharField(max_length=22, null=True)
     data_solicitacao = models.DateField(null=True)
     status_projeto = models.CharField(max_length=255, null=True)
     n_termoaceite = models.CharField(max_length=255, null=True)
