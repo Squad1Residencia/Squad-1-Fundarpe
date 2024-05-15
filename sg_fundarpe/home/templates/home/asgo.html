@@ -14,28 +14,55 @@
     {% for projeto in projetos %}
     <li>
       {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
-      <a href="#">Editar</a>
+      <button class="add-button" n-projeto="{{ projeto.n_projeto }}">+</button>
     </li>
   {% endfor %}
     </ul>
   </div>
 
-  <h2>Cadastrar Projeto</h2>
-  <form action="{% url 'funcaoquevocecriou' %}" id="formularioProjeto" method="post">
+  <h2>Adicionar Informações</h2>
+  <form action="{% url 'cadastrar_empenho'%}" id="formularioProjeto" method="post">
     {% csrf_token %}
-    <label for="Exemplo">Exemplo:</label>
-    <input type="text" id="Exemplo" name="Exemplo" required><br>
+    Projeto: <big><u id="nome_projeto"></u></big><br>
+    <label for="n_projeto">Nº do Projeto:</label>
+    <input list="projetos" id="n_projeto" name="n_projeto" required>
+    <datalist id="projetos">
+      {% for projeto in projetos %}
+        <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+      {% endfor %}
+      </datalist><br>
+    <label for="n_empenho">Número do empenho:</label>
+    <input type="number" id="n_empenho" name="n_empenho" required><br>
+    <label for="data_empenho">Data de confecção do empenho:</label>
+    <input type="date" id="data_empenho" name="data_empenho" required><br>
 
-
-    <button type="submit">Enviar</button>
+    <button type="submit">Adicionar</button>
   </form>
   <div id="resultado"></div>
   <script>
     document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
-      document.getElementById("resultado").innerText = "enviado com sucesso!";
-
+      document.getElementById("resultado").innerText = "adicionado com sucesso!";
     });
+
+    var addButtons = document.querySelectorAll(".add-button");
+    for (var i = 0; i < addButtons.length; i++) {
+      addButtons[i].addEventListener("click", function(event) {
+        event.preventDefault();
+        var n_projeto = this.getAttribute("n-projeto");
+        document.getElementById("n_projeto").value = n_projeto;
+        updateNomeProjeto(n_projeto);
+      });
+    }
+
+    document.getElementById("n_projeto").addEventListener("change", function() {
+      updateNomeProjeto(this.value);
+    });
+
+    function updateNomeProjeto(n_projeto) {
+      var option = document.querySelector('#projetos option[value="' + n_projeto + '"]');
+      var nome_projeto = option ? option.text.split(' - ')[0] : '';
+      document.getElementById("nome_projeto").innerText = nome_projeto;
+    }
   </script>
- 
 </body>
 </html>
