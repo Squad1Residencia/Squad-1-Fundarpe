@@ -8,34 +8,126 @@
 <body>
   <h1>DIF</h1>
   <div>
-    <h2>Projetos: </h2>
+    <h2>Operações: </h2>
     <ul>
     <!-- Implementacao do READ com um for. -->
-    {% for projeto in projetos %}
-    <li>
-      {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
-      <a href="#">Editar</a>
-    </li>
-  {% endfor %}
+      {% for projeto in projetos %}
+      <li>
+        {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
+      </li>
+      {% endfor %}
     </ul>
   </div>
+  
+  <select id="formSelect">
+    <option value="">Selecione um formulário</option>
+    <option value="form1">Autorização de empenho</option>
+    <option value="form2">Assinatura do termo</option>
+    <option value="form3">Envio para pagamento</option>
+  </select>
+  <div id="form1" class="form" style="display:none;">
+    <h2>Autorização de empenho</h2>
+    <form action="{% url 'cadastrar_operacao' %}" id="formularioProjeto" method="POST">
+      {% csrf_token %}
+      <div>
+        <label for="n_projeto">Nº do Projeto:</label>
+        <select  id="n_projeto" name="n_projeto">
+          {% for projeto in projetos %}
+            <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+          {% endfor %}
+        </select>
+        <br>
+        
+  
+        <label for="data_operacao">Data autorização de empenho:</label>
+        <input type="date" id="data_operacao" name="data_operacao" required><br>
+  
+        <input type="hidden" id="nome_operacao" name="nome_operacao" value="Autorização de empenho"><br>
+  
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
+  </div>
 
-  <h2>Cadastrar Projeto</h2>
-  <form action="{% url 'funcaoquevocecriou' %}" id="formularioProjeto" method="post">
-    {% csrf_token %}
-    <label for="Exemplo">Exemplo:</label>
-    <input type="text" id="Exemplo" name="Exemplo" required><br>
+  <div id="form2" class="form" style="display:none;">
+    <h2>Assinatura do Termo </h2>
+    <form action="{% url 'cadastrar_operacao' %}" id="formularioProjeto" method="POST">
+      {% csrf_token %}
+      <div>
+        <label for="n_projeto">Nº do Projeto:</label>
+        <select  id="n_projeto" name="n_projeto">
+          {% for projeto in projetos %}
+            <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+          {% endfor %}
+        </select>
+        <br>
+        <label for="data_operacao">Data assinatura do termo:</label>
+        <input type="date" id="data_operacao" name="data_operacao" required><br>
+        
+        <input type="hidden" id="nome_operacao" name="nome_operacao" value="Assinatura do termo"><br>
+  
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
+  </div>
+  
+  <div id="form3" class="form" style="display:none;">
+    <h2>Envio para pagamento</h2>
+    <form action="{% url 'cadastrar_operacao' %}" id="formularioProjeto" method="POST">
+      {% csrf_token %}
+      <div>
+        <label for="n_projeto">Nº do Projeto:</label>
+        <select  id="n_projeto" name="n_projeto">
+          {% for projeto in projetos %}
+            <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+          {% endfor %}
+        </select>
+        <br>
 
+        <label for="data_operacao">Data de envio para pagamento:</label>
+        <input type="date" id="data_operacao" name="data_operacao" required><br>
+  
+        <input type="hidden" id="nome_operacao" name="nome_operacao" value="Envio para pagamento"><br>
+        
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
+    <div id="resultado"></div>
+  </div>
+ 
 
-    <button type="submit">Enviar</button>
-  </form>
-  <div id="resultado"></div>
+  
+
+  
   <script>
     document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
       document.getElementById("resultado").innerText = "enviado com sucesso!";
 
     });
+    document.getElementById('formSelect').addEventListener('change', function() {
+      // Hide all forms
+      var forms = document.getElementsByClassName('form');
+      for (var i = 0; i < forms.length; i++) {
+        forms[i].style.display = 'none';
+      }
+    
+      // Show the selected form
+      var selectedForm = document.getElementById(this.value);
+      if (selectedForm) {
+        selectedForm.style.display = 'block';
+      }
+    });
   </script>
  
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
