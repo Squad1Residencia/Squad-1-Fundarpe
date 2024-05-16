@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="\static\modal.js" type="text/javascript" defer></script>
-  <link rel="stylesheet" href="\static\unat.css">
   <title>Fundarpe - UNAT</title>
 </head>
 <body>
@@ -16,54 +14,110 @@
     {% for projeto in projetos %}
     <li>
       {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
-      <button id="myBtn">Editar</button>
-      
-      <div id="myModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" >
-        <div class="modal-content">
-          <span class="close">&times;</span>
-
-          <div class="container">
-
-            <h2>Editar Projeto</h2>
-
-            <form action="{% url 'cadastrar_projeto' %}" id="formularioProjeto" method="post">
-              {% csrf_token %}
-              <div class="elementos">
-                <label for="n_projeto">Nº do Projeto:</label>
-                <input type="number" id="n_projeto" name="n_projeto" required><br>
-              </div>
-          
-              <div class="elementos">
-                <label for="titulo_projeto">Titulo do Projeto:</label>
-                <input type="text" id="titulo_projeto" name="titulo_projeto" required><br>
-              </div>
-          
-              <div class="elementos">
-                <label for="n_sei">N° do SEI:</label>
-                <input type="number" id="n_sei" name="n_sei" required><br>
-              </div>
-          
-              <div class="elementos">
-                <label for="valor_solicitado">Valor solicitado:</label>
-                <input type="number" id="valor_solicitado" name="valor_solicitado" step="0.01" required><br>
-              </div>
-          
-              <div class="elementos">
-                <label for="n_parcelas">Número de Parcelas:</label>
-                <input type="number" id="n_parcelas" name="n_parcelas" required><br>
-              </div>
-          
-              <div class="elementos">
-                <button type="submit">Salvar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+      <button class="edit-btn" data-projeto-id="{{ projeto.id }}">Editar</button>
     </li>
-  {% endfor %}
+    {% endfor %}
     </ul>
   </div>
+
+  <div class="modalEditar" id="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="editarContent">
+        <!DOCTYPE html>
+          <html lang="en">
+          <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Editar</title>
+          <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        </head>
+        <body>
+          <h1>Editar Projeto </h1>
+
+          <h2>{{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}</h2>
+          <form id="formularioProjetoEditar" method="post">
+            {% csrf_token %}
+            <label for="n_projeto">Nº do Projeto:</label>
+            <input type="number" id="n_projeto" name="n_projeto" value="{{ projeto.n_projeto }}" required><br>
+    
+            <label for="titulo_projeto">Titulo do Projeto:</label>
+            <input type="text" id="titulo_projeto" name="titulo_projeto" value="{{ projeto.titulo_projeto }}" required><br>
+      
+            <label for="n_sei">N° do SEI:</label>
+            <input type="number" id="n_sei" name="n_sei" value="{{ projeto.n_sei }}" required><br>
+      
+            <label for="n_empenho">N° do Empenho:</label>
+            <input type="number" id="n_empenho" name="n_empenho" value="{{ projeto.n_empenho }}" required><br>
+      
+            <label for="data_solicitacao">Data da Solicitação:</label>
+            <input type="date" id="data_solicitacao" name="data_solicitacao" value="{{ projeto.data_solicitacao|date:'Y-m-d' }}" required><br>
+      
+            <label for="status_projeto">Status do Projeto:</label>
+            <input type="text" id="status_projeto" name="status_projeto" value="{{ projeto.status_projeto }}" required><br>
+      
+            <label for="n_termoaceite">N° do Termo de Aceite:</label>
+            <input type="number" id="n_termoaceite" name="n_termoaceite" value="{{ projeto.n_termoaceite }}" required><br>
+
+            <label for="reponsavel_termo">Responsável pelo Termo de Aceite:</label>
+            <input type="text" id="responsavel_termo" name="responsavel_termo" value="{{ projeto.reponsavel_termo }}" required><br>
+        
+            <button type="submit">Editar</button>
+          </form>
+          <div id="resultado"></div>
+          <script>
+            document.getElementById("formularioProjetoEditar").addEventListener("submit", function(event) {
+            document.getElementById("resultado").innerText = "editado com sucesso!";
+    
+            });
+          </script>
+            {% csrf_token %}
+            <button type="submit">Deletar</button>
+          </form>
+        </body>
+        </html>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.edit-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var projetoId = btn.getAttribute('data-projeto-id');
+        fetch('/editar/' + projetoId)
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('editarContent').innerHTML = data;
+            document.getElementById('modal').style.display = 'block';
+          })
+          .catch(error =>console.error('Erro: ', error));
+      });
+    });
+
+    document.querySelector('.close').addEventListener('click', function() {
+      document.getElementById('modal').style.display = 'none';
+    });
+    
+    document.addEventListener('submit', function(event) {
+      if (event.target.id === 'formularioProjetoEditar') {
+        event.preventDefault();
+        var formData = new FormData(event.target);
+        fetch(event.target.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+          }
+        })
+          .then(response => response.text())
+          .then(data => {
+            console.log(data);
+            document.getElementById('resultado').innerText = 'Editado com Sucesso!';
+          })
+          .catch(error => console.error('Erro: ', error));
+      }
+    });
+  </script>
 
   <h2>Cadastrar Projeto</h2>
   <form action="{% url 'cadastrar_projeto' %}" id="formularioProjeto" method="post">
