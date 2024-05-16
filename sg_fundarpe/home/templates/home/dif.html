@@ -8,7 +8,7 @@
 <body>
   <h1>DIF</h1>
   <div>
-    <h2>Operações: </h2>
+    <h2>Projetos: </h2>
     <ul>
     <!-- Implementacao do READ com um for. -->
       {% for projeto in projetos %}
@@ -18,9 +18,9 @@
       {% endfor %}
     </ul>
   </div>
-  
+
+  <label for="operacoes"> Escolha a operação:</label>
   <select id="formSelect">
-    <option value="">Selecione um formulário</option>
     <option value="form1">Autorização de empenho</option>
     <option value="form2">Assinatura do termo</option>
     <option value="form3">Envio para pagamento</option>
