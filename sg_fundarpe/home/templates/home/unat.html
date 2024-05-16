@@ -2,23 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <script>
-    function filterProjects() {
-      var input = document.getElementById('myInput');
-      var filter = input.value.toUpperCase();
-      var ul = document.getElementById("myUL");
-      var li = ul.getElementsByTagName('li');
-
-      for (var i = 0; i < li.length; i++) {
-        var a = li[i].textContent || li[i].innerText;
-        if (a.toUpperCase().indexOf(filter) > -1) {
-          li[i].style.display = "";
-        } else {
-          li[i].style.display = "none";
-        }
-      }
-    }
-  </script>
+  <title>Fundarpe - UNAT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="static/unat.css">
   <style>
     #myInput {
@@ -38,24 +23,38 @@
       list-style-type: none;
     }
   </style>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fundarpe - UNAT</title>
+  <script>
+    function filterProjects() {
+      var input, filter, ul, li, a;
+      input = document.getElementById('myInput');
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myUL");
+      li = ul.getElementsByTagName('li');
+
+      for (var i = 0; i < li.length; i++) {
+        a = li[i].textContent || li[i].innerText;
+        if (a.toUpperCase().indexOf(filter) > -1) {
+          li[i].style.display = "";
+        } else {
+          li[i].style.display = "none";
+        }
+      }
+    }
+  </script>
 </head>
 <body>
   <h1>UNAT</h1>
-
   <input type="text" id="myInput" onkeyup="filterProjects()" placeholder="Pesquisar Processo">
 
   <div>
-    <h2>Projetos: </h2>
+    <h2>Projetos:</h2>
     <ul id="myUL">
-    <!-- Implementacao do READ com um for. -->
-    {% for projeto in projetos %}
-    <li>
-      {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
-      <a href="#">Editar</a>
-    </li>
-  {% endfor %}
+      {% for projeto in projetos %}
+      <li>
+        {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
+        <a href="#">Editar</a>
+      </li>
+      {% endfor %}
     </ul>
   </div>
 
@@ -69,7 +68,7 @@
     </div>
 
     <div class="elementos">
-      <label for="titulo_projeto">Titulo do Projeto:</label>
+      <label for="titulo_projeto">Título do Projeto:</label>
       <input type="text" id="titulo_projeto" name="titulo_projeto" required><br>
     </div>
 
@@ -79,7 +78,7 @@
     </div>
 
     <div class="elementos">
-      <label for="valor_solicitado">Valor solicitado:</label>
+      <label for="valor_solicitado">Valor Solicitado:</label>
       <input type="number" id="valor_solicitado" name="valor_solicitado" step="0.01" required><br>
     </div>
 
@@ -91,15 +90,13 @@
     <div class="elementos">
       <button type="submit">Enviar</button>
     </div>
-  
+
   </form>
   <div id="resultado"></div>
   <script>
     document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
-      document.getElementById("resultado").innerText = "enviado com sucesso!";
-
+      document.getElementById("resultado").innerText = "Enviado com sucesso!";
     });
   </script>
- 
 </body>
 </html>
