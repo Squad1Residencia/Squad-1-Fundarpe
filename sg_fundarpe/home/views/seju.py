@@ -18,6 +18,7 @@ def cadastrar_operacao(request):
             return HttpResponse("Projeto não encontrado", status=400)
 
 
+
         projeto.save()
         Operacao.objects.create(n_projeto=projeto, id_usuario=request.user, data_operacao=data_operacao, status_operacao='Concluida', nome_operacao=nome_operacao)
         return redirect('seju')
