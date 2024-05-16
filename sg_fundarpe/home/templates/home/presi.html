@@ -14,22 +14,30 @@
     {% for projeto in projetos %}
     <li>
       {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
-      <a href="#">Editar</a>
     </li>
   {% endfor %}
     </ul>
   </div>
 
-  <h2>Cadastrar Projeto</h2>
-  <form action="{% url 'funcaoquevocecriou' %}" id="formularioProjeto" method="post">
-    {% csrf_token %}
-    <label for="Exemplo">Exemplo:</label>
-    <input type="text" id="Exemplo" name="Exemplo" required><br>
+  <h2>Assinatura do Termo </h2>
+    <form action="{% url 'cadastro_operacao' %}" id="formularioProjeto" method="POST">
+      {% csrf_token %}
+      <div>
+        <label for="n_projeto">Nº do Projeto:</label>
+        <select  id="n_projeto" name="n_projeto">
+          {% for projeto in projetos %}
+            <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+          {% endfor %}
+        </select>
+        <br>
+        <label for="data_operacao">Data assinatura do termo:</label>
+        <input type="date" id="data_operacao" name="data_operacao" required><br>
 
+        <input type="hidden" id="nome_operacao" name="nome_operacao" value="Assinatura do termo PRESI"><br>
 
-    <button type="submit">Enviar</button>
-  </form>
-  <div id="resultado"></div>
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
   <script>
     document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
       document.getElementById("resultado").innerText = "enviado com sucesso!";
