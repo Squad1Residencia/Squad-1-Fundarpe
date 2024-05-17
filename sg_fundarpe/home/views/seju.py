@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from home.models import Projeto,Operacao #chamar tabelas que serão utilizadas
 from django.http import HttpResponse
