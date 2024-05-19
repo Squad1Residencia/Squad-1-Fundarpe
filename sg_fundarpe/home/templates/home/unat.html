@@ -10,6 +10,7 @@
   <title>Fundarpe - UNAT</title>
 </head>
 <body>
+  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT">
   <h1>UNAT</h1>
 
   
@@ -20,13 +21,12 @@
     <input type="text" id="myInput" onkeyup="filterProjects()" placeholder="Pesquisar Processo">
     
     <ul id="myUL">
-    <!-- Implementacao do READ com um for. -->
-    {% for projeto in projetos %}
-    <li>
-      {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
-      <a href="#">Editar</a>
-    </li>
-    {% endfor %}
+      {% for projeto in projetos %}
+      <li>
+        {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
+        <a href="#" class="editar" data-n_projeto="{{ projeto.n_projeto }}">Editar</a>
+      </li>
+      {% endfor %}
     </ul>
   </div>
   
@@ -37,7 +37,7 @@
       <span class="X">&times;</span>
   
       <div class="formulario">
-        <h2>Cadastrar Projeto</h2>
+        <h2 id="formTitle">Cadastrar Projeto</h2>
         <form action="{% url 'cadastrar_projeto' %}" id="formularioProjeto" spellcheck="false" method="post"> 
         {% csrf_token %}
     
@@ -104,6 +104,36 @@
         modal.style.display = "none";
       }
 }
+  </script>
+
+<script>
+  document.getElementById('myBtn').addEventListener('click', function() {
+    document.getElementById('n_projeto').value = '';
+    document.getElementById('titulo_projeto').value = '';
+    document.getElementById('n_sei').value = '';
+    document.getElementById('valor_solicitado').value = '';
+    document.getElementById('n_parcelas').value = '';
+    document.getElementById('myModal').style.display = 'block';
+    document.getElementById('formTitle').textContent = 'Cadastrar Projeto';
+  });
+  
+  document.querySelectorAll('.editar').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var n_projeto = this.getAttribute('data-n_projeto');
+      fetch('/unat/editar/' + n_projeto)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('n_projeto').value = data.n_projeto;
+          document.getElementById('titulo_projeto').value = data.titulo_projeto;
+          document.getElementById('n_sei').value = data.n_sei;
+          document.getElementById('valor_solicitado').value = data.valor_solicitado;
+          document.getElementById('n_parcelas').value = data.n_parcelas;
+          document.getElementById('myModal').style.display = 'block';
+          document.getElementById('formTitle').textContent = 'Editar Projeto';
+        });
+    });
+  });
   </script>
 </body>
 </html>
