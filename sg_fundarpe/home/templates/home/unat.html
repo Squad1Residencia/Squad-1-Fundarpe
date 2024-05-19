@@ -1,53 +1,24 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <script>
-    function filterProjects() {
-      var input = document.getElementById('myInput');
-      var filter = input.value.toUpperCase();
-      var ul = document.getElementById("myUL");
-      var li = ul.getElementsByTagName('li');
-
-      for (var i = 0; i < li.length; i++) {
-        var a = li[i].textContent || li[i].innerText;
-        if (a.toUpperCase().indexOf(filter) > -1) {
-          li[i].style.display = "";
-        } else {
-          li[i].style.display = "none";
-        }
-      }
-    }
-  </script>
-  <link rel="stylesheet" href="static/unat.css">
-  <style>
-    #myInput {
-      padding: 12px;
-      margin-bottom: 12px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-
-    #myUL li {
-      width: 50%;
-      padding: 8px;
-      margin-top: -1px;
-      background-color: #f6f6f6;
-      border: 1px solid #ddd;
-      font-size: 18px;
-      list-style-type: none;
-    }
-  </style>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'unat.css' %}">
+  <script src="{% static 'barraPesquisa.js' %}" type="text/javascript" refer></script>
   <title>Fundarpe - UNAT</title>
 </head>
 <body>
   <h1>UNAT</h1>
 
-  <input type="text" id="myInput" onkeyup="filterProjects()" placeholder="Pesquisar Processo">
+  
+  <div class="listaProcessos">
+    
+    <h2 style="margin-bottom: 5px;">Projetos</h2>
 
-  <div>
-    <h2>Projetos: </h2>
+    <input type="text" id="myInput" onkeyup="filterProjects()" placeholder="Pesquisar Processo">
+    
     <ul id="myUL">
     <!-- Implementacao do READ com um for. -->
     {% for projeto in projetos %}
@@ -55,50 +26,84 @@
       {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
       <a href="#">Editar</a>
     </li>
-  {% endfor %}
+    {% endfor %}
     </ul>
   </div>
-
-  <h2>Cadastrar Projeto</h2>
-  <form action="{% url 'cadastrar_projeto' %}" id="formularioProjeto" method="post">
-    {% csrf_token %}
-
-    <div class="elementos">
-      <label for="n_projeto">Nº do Projeto:</label>
-      <input type="number" id="n_projeto" name="n_projeto" required><br>
-    </div>
-
-    <div class="elementos">
-      <label for="titulo_projeto">Titulo do Projeto:</label>
-      <input type="text" id="titulo_projeto" name="titulo_projeto" required><br>
-    </div>
-
-    <div class="elementos">
-      <label for="n_sei">N° do SEI:</label>
-      <input type="number" id="n_sei" name="n_sei" required><br>
-    </div>
-
-    <div class="elementos">
-      <label for="valor_solicitado">Valor solicitado:</label>
-      <input type="number" id="valor_solicitado" name="valor_solicitado" step="0.01" required><br>
-    </div>
-
-    <div class="elementos">
-      <label for="n_parcelas">Número de Parcelas:</label>
-      <input type="number" id="n_parcelas" name="n_parcelas" required><br>
-    </div>
-
-    <div class="elementos">
-      <button type="submit">Enviar</button>
-    </div>
   
-  </form>
-  <div id="resultado"></div>
-  <script>
-    document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
-      document.getElementById("resultado").innerText = "enviado com sucesso!";
+  <button id="myBtn">Criar um novo projeto</button>
 
-    });
+  <div id="myModal" class="modal">
+    <div class="conteudoModal">
+      <span class="X">&times;</span>
+  
+      <div class="formulario">
+        <h2>Cadastrar Projeto</h2>
+        <form action="{% url 'cadastrar_projeto' %}" id="formularioProjeto" spellcheck="false" method="post"> 
+        {% csrf_token %}
+    
+          <div class="elementos">
+            <label for="n_projeto">Nº do Projeto:</label>
+            <input type="number" id="n_projeto" name="n_projeto" required><br>
+          </div>
+    
+          <div class="elementos">
+            <label for="titulo_projeto">Titulo do Projeto:</label>
+            <input type="text" id="titulo_projeto" name="titulo_projeto" required><br>
+          </div>
+    
+          <div class="elementos">
+            <label for="n_sei">N° do SEI:</label>
+            <input type="number" id="n_sei" name="n_sei" required><br>
+          </div>
+    
+          <div class="elementos">
+            <label for="valor_solicitado">Valor solicitado:</label>
+            <input type="number" id="valor_solicitado" name="valor_solicitado" step="0.01" required><br>
+          </div>
+    
+          <div class="elementos">
+            <label for="n_parcelas">Número de Parcelas:</label>
+            <input type="number" id="n_parcelas" name="n_parcelas" required><br>
+          </div>
+    
+          <div class="elementos">
+            <button type="submit">Enviar</button>
+          </div>
+      
+        </form>
+      </div>
+    
+      <div id="resultado"></div>
+      <script>
+        document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
+          document.getElementById("resultado").innerText = "enviado com sucesso!";
+    
+        });
+      </script>
+  
+    </div>
+  </div>
+
+  <script>
+    var modal = document.getElementById("myModal");
+
+    var btn = document.getElementById("myBtn");
+
+    var span = document.getElementsByClassName("X")[0];
+
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+}
   </script>
  
 </body>
