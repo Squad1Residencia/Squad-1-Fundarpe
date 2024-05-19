@@ -33,6 +33,8 @@ class Operacao(models.Model):
     status_operacao = models.CharField(max_length=255)
     nome_operacao = models.CharField(max_length=255)
     data_cadastro = models.DateField(auto_now_add=True)
+
+
     def __str__(self):
         return self.nome_operacao
 

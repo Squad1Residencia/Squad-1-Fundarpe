@@ -1,54 +1,139 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'unat.css' %}">
+  <script src="{% static 'barraPesquisa.js' %}" type="text/javascript" refer></script>
   <title>Fundarpe - UNAT</title>
 </head>
 <body>
+  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT">
   <h1>UNAT</h1>
-  <div>
-    <h2>Projetos: </h2>
-    <ul>
-    <!-- Implementacao do READ com um for. -->
-    {% for projeto in projetos %}
-    <li>
-      {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
-      <a href="#">Editar</a>
-    </li>
-  {% endfor %}
+
+  
+  <div class="listaProcessos">
+    
+    <h2 style="margin-bottom: 5px;">Projetos</h2>
+
+    <input type="text" id="myInput" onkeyup="filterProjects()" placeholder="Pesquisar Processo">
+    
+    <ul id="myUL">
+      {% for projeto in projetos %}
+      <li>
+        {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
+        <a href="#" class="editar" data-n_projeto="{{ projeto.n_projeto }}">Editar</a>
+      </li>
+      {% endfor %}
     </ul>
   </div>
+  
+  <button id="myBtn">Criar um novo projeto</button>
 
-  <h2>Cadastrar Projeto</h2>
-  <form action="{% url 'cadastrar_projeto' %}" id="formularioProjeto" method="post">
-    {% csrf_token %}
-    <label for="n_projeto">Nº do Projeto:</label>
-    <input type="number" id="n_projeto" name="n_projeto" required><br>
+  <div id="myModal" class="modal">
+    <div class="conteudoModal">
+      <span class="X">&times;</span>
+  
+      <div class="formulario">
+        <h2 id="formTitle">Cadastrar Projeto</h2>
+        <form action="{% url 'cadastrar_projeto' %}" id="formularioProjeto" spellcheck="false" method="post"> 
+        {% csrf_token %}
+    
+          <div class="elementos">
+            <label for="n_projeto">Nº do Projeto:</label>
+            <input type="number" id="n_projeto" name="n_projeto" required><br>
+          </div>
+    
+          <div class="elementos">
+            <label for="titulo_projeto">Titulo do Projeto:</label>
+            <input type="text" id="titulo_projeto" name="titulo_projeto" required><br>
+          </div>
+    
+          <div class="elementos">
+            <label for="n_sei">N° do SEI:</label>
+            <input type="number" id="n_sei" name="n_sei" required><br>
+          </div>
+    
+          <div class="elementos">
+            <label for="valor_solicitado">Valor solicitado:</label>
+            <input type="number" id="valor_solicitado" name="valor_solicitado" step="0.01" required><br>
+          </div>
+    
+          <div class="elementos">
+            <label for="n_parcelas">Número de Parcelas:</label>
+            <input type="number" id="n_parcelas" name="n_parcelas" required><br>
+          </div>
+    
+          <div class="elementos">
+            <button type="submit">Enviar</button>
+          </div>
+      
+        </form>
+      </div>
+    
+      <div id="resultado"></div>
+      <script>
+        document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
+          document.getElementById("resultado").innerText = "enviado com sucesso!";
+    
+        });
+      </script>
+  
+    </div>
+  </div>
 
-    <label for="titulo_projeto">Titulo do Projeto:</label>
-    <input type="text" id="titulo_projeto" name="titulo_projeto" required><br>
-
-    <label for="n_sei">N° do SEI:</label>
-    <input type="number" id="n_sei" name="n_sei" required><br>
-
-    <label for="valor_solicitado">Valor solicitado:</label>
-    <input type="number" id="valor_solicitado" name="valor_solicitado" step="0.01" required><br>
-
-    <label for="n_parcelas">Número de Parcelas:</label>
-    <input type="number" id="n_parcelas" name="n_parcelas" required><br>
-
-   
-
-    <button type="submit">Enviar</button>
-  </form>
-  <div id="resultado"></div>
   <script>
-    document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
-      document.getElementById("resultado").innerText = "enviado com sucesso!";
+    var modal = document.getElementById("myModal");
 
-    });
+    var btn = document.getElementById("myBtn");
+
+    var span = document.getElementsByClassName("X")[0];
+
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+}
   </script>
- 
+
+<script>
+  document.getElementById('myBtn').addEventListener('click', function() {
+    document.getElementById('n_projeto').value = '';
+    document.getElementById('titulo_projeto').value = '';
+    document.getElementById('n_sei').value = '';
+    document.getElementById('valor_solicitado').value = '';
+    document.getElementById('n_parcelas').value = '';
+    document.getElementById('myModal').style.display = 'block';
+    document.getElementById('formTitle').textContent = 'Cadastrar Projeto';
+  });
+  
+  document.querySelectorAll('.editar').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var n_projeto = this.getAttribute('data-n_projeto');
+      fetch('/unat/editar/' + n_projeto)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('n_projeto').value = data.n_projeto;
+          document.getElementById('titulo_projeto').value = data.titulo_projeto;
+          document.getElementById('n_sei').value = data.n_sei;
+          document.getElementById('valor_solicitado').value = data.valor_solicitado;
+          document.getElementById('n_parcelas').value = data.n_parcelas;
+          document.getElementById('myModal').style.display = 'block';
+          document.getElementById('formTitle').textContent = 'Editar Projeto';
+        });
+    });
+  });
+  </script>
 </body>
 </html>
