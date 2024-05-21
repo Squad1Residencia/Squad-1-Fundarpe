@@ -18,36 +18,8 @@
   {% endfor %}
     </ul>
   </div>
-
-  <select id="formSelect">
-    <option value="">Selecione um formulário</option>
-    <option value="form2">Confecção do termo</option>
-  </select>
-  <div id="form1" class="form" style="display:none;">
-    <h2>Autorização de empenho</h2>
-    <form action="{% url 'cadastrar_asju' %}" id="formularioProjeto" method="POST">
-      {% csrf_token %}
-      <div>
-        <label for="n_projeto">Nº do Projeto:</label>
-        <select  id="n_projeto" name="n_projeto">
-          {% for projeto in projetos %}
-            <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
-          {% endfor %}
-        </select>
-        <br>
         
-  
-        <label for="data_operacao">Data autorização de empenho:</label>
-        <input type="date" id="data_operacao" name="data_operacao" required><br>
-  
-        <input type="hidden" id="nome_operacao" name="nome_operacao" value="Autorização de empenho"><br>
-  
-        <button type="submit">Enviar</button>
-      </div>
-    </form>
-  </div>
-
-  <div id="form2" class="form" style="display:none;">
+  <div id="form2" class="form" >
     <h2>Confecção do Termo </h2>
     <form action="{% url 'cadastrar_asju' %}" id="formularioProjeto" method="POST">
       {% csrf_token %}
@@ -69,49 +41,14 @@
     </form>
   </div>
   
-  <div id="form3" class="form" style="display:none;">
-    <h2>Envio para pagamento</h2>
-    <form action="{% url 'cadastrar_asju' %}" id="formularioProjeto" method="POST">
-      {% csrf_token %}
-      <div>
-        <label for="n_projeto">Nº do Projeto:</label>
-        <select  id="n_projeto" name="n_projeto">
-          {% for projeto in projetos %}
-            <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
-          {% endfor %}
-        </select>
-        <br>
-
-        <label for="data_operacao">Data de envio para pagamento:</label>
-        <input type="date" id="data_operacao" name="data_operacao" required><br>
-  
-        <input type="hidden" id="nome_operacao" name="nome_operacao" value="Envio para pagamento"><br>
-        
-        <button type="submit">Enviar</button>
-      </div>
-    </form>
-    <div id="resultado"></div>
-  </div>
+ 
  
   <script>
     document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
       document.getElementById("resultado").innerText = "enviado com sucesso!";
 
     });
-    document.getElementById('formSelect').addEventListener('change', function() {
-      // Hide all forms
-      var forms = document.getElementsByClassName('form');
-      for (var i = 0; i < forms.length; i++) {
-        forms[i].style.display = 'none';
-      }
-    
-      // Show the selected form
-      var selectedForm = document.getElementById(this.value);
-      if (selectedForm) {
-        selectedForm.style.display = 'block';
-      }
-    });
   </script>
  
 </body>
-</html
+</html>
