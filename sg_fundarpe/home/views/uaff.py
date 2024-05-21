@@ -1,11 +1,16 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from home.models import Projeto, Operacao #chamar tabelas que serão utilizadas
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 
+@login_required
 def homepage(request):
+    if request.user.departamento != 'uaff':
+        return redirect('/login/')
     projetos = Projeto.objects.all() 
     return render(request, 'home/uaff.html', {'projetos': projetos})
 
+@login_required
 def cadastro_uaff(request):
     if request.method == 'POST':
         # Obtém os dados do formulário
@@ -29,6 +34,7 @@ def cadastro_uaff(request):
     else:
         return HttpResponse("Erro ao cadastrar a operação", status=400)
     
+@login_required 
 def cadastro_uaff1(request):
     if request.method == 'POST':
         # Obtém os dados do formulário

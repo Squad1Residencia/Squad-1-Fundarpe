@@ -7,18 +7,14 @@ from datetime import datetime
 #@login_required
 def homepage(request):
     # Verificar se o usuário pertence ao departamento 'asgo'
-    #if request.user.departamento != 'asgo':
-        #return HttpResponseForbidden()
+    if request.user.departamento != 'asgo':
+        return redirect('/login/')
 
-    projetos = Projeto.objects.all() 
+    projetos = Projeto.objects.filter(n_empenho__isnull=True)  
     return render(request, 'home/asgo.html', {'projetos': projetos})
 
-#@login_required
+@login_required
 def cadastrar_empenho(request):
-  
-    #if request.user.departamento != 'asgo':
-        #return HttpResponseForbidden()
-    
     if request.method == 'POST':
         # Obtém os dados do formulário
         n_projeto = request.POST.get('n_projeto')
@@ -29,12 +25,9 @@ def cadastrar_empenho(request):
         if not projeto:
             return HttpResponse("Um projeto com esse número não existe", status=400)
         
-        # Verifica se um empenho com o mesmo n_empenho já existe
-        #if projeto.n_empenho:
-            #return HttpResponse("Um empenho com esse número já existe", status=400)
-        
         # Atualiza o n_empenho do projeto e cria uma nova operação
         projeto.n_empenho = n_empenho
+        projeto.status_projeto = '4'  # Adiciona o status do projeto
         projeto.save()
         Operacao.objects.create(n_projeto=projeto, id_usuario=request.user, data_operacao=datetime.now(), status_operacao='Concluida', nome_operacao='Cadastro de Empenho')
         return redirect('asgo')

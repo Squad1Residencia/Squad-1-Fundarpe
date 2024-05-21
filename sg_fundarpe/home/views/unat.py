@@ -9,12 +9,12 @@ from django.utils import timezone
 def homepage(request):
     # Verificar se o usuário pertence ao departamento 'unat'
     if request.user.departamento != 'unat':
-        return HttpResponseForbidden()
+        return redirect('/login/')
 
     projetos = Projeto.objects.all() 
     return render(request, 'home/unat.html', {'projetos': projetos})
 
-@login_required
+
 @login_required
 def cadastrar_projeto(request):
     if request.method == 'POST':
