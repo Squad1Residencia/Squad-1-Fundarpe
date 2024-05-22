@@ -1,55 +1,104 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <script src="{% static 'barraPesquisa.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'seju.css' %}">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fundarpe - SEJU</title>
 </head>
 <body>
+  
   <h1>SEJU</h1>
-  <div>
-    <h2>Projetos: </h2>
-    <ul>
-    <!-- Implementacao do READ com um for. -->
-    {% for projeto in projetos %}
-    <li>
-      {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
-      <a href="#">Editar</a>
-    </li>
-  {% endfor %}
+  
+  <div class="listaProcessos">
+
+    <h2 style="margin-bottom: 5px;">Projetos</h2>
+    
+    <input type="text" id="myInput" onkeyup="filterProjects()" placeholder="Pesquisar projetos">
+
+    <ul class="myUL">
+      <!-- Implementacao do READ com um for. -->
+      {% for projeto in projetos %}
+      <li>
+        {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
+        <a href="#" class="editar" data-n_projeto="{{ projeto.n_projeto }}">Editar</a>
+      </li>
+      {% endfor %}
     </ul>
   </div>
 
-  <div id="form1" class="form">
-    <h2>Autorização de empenho</h2>
-    <form action="{% url 'cadastrar_seju' %}" id="formularioProjeto" method="POST">
-      {% csrf_token %}
-      <div>
-        <label for="n_projeto">Nº do Projeto:</label>
-        <select  id="n_projeto" name="n_projeto">
-          {% for projeto in projetos %}
-            <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
-          {% endfor %}
-        </select>
-        <br>
-        
-  
-        <label for="data_operacao">Data do visto do termo:</label>
-        <input type="date" id="data_operacao" name="data_operacao" required><br>
-  
-        <input type="hidden" id="nome_operacao" name="nome_operacao" value="Visto do termo"><br>
-  
-        <button type="submit">Enviar</button>
-      </div>
-    </form>
-  </div>
-  <script>
-    
-    document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
-      document.getElementById("resultado").innerText = "enviado com sucesso!";
+  <button id="myBtn">Atualizar empenho</button>
 
-    });
+  <div id="myModal" class="modal">
+    <div class="conteudoModal">
+      <span class="X">&times;</span>
+
+      <div id="form1" class="form">
+        
+        <h2 id="formTitle">Autorização de empenho</h2>
+      
+        <form action="{% url 'cadastrar_seju' %}" id="formularioProjeto" method="POST">
+          {% csrf_token %}
+          <div class="elementos">
+            <label for="n_projeto">Nº do Projeto:</label>
+            <select  id="n_projeto" name="n_projeto">
+              {% for projeto in projetos %}
+              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="elementos">
+            <label for="data_operacao">Data do visto do termo:</label>
+            <input type="date" id="data_operacao" name="data_operacao" required><br>
+          </div>
+
+          <div class="elementos">
+            <input type="hidden" id="nome_operacao" name="nome_operacao" value="Visto do termo">
+          </div>
+
+          <div class="elementos">
+            <button type="submit">Enviar</button>
+          </div>
+
+        </form>
+
+      </div>
+
+      <div id="resultado"></div>
+
+      <script>
+        document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
+          document.getElementById("resultado").innerText = "enviado com sucesso!";
+        });
+      </script>
+
+    </div>
+  </div>
+
+  <script>
+    var modal = document.getElementById("myModal");
+
+    var btn = document.getElementById("myBtn");
+
+    var span = document.getElementsByClassName("X")[0];
+
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
   </script>
- 
+
 </body>
 </html>
