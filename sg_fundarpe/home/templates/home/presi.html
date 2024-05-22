@@ -34,34 +34,40 @@
     <div class="conteudoModal">
       <span class="X">&times;</span>
 
-      <h2>Assinatura do termo</h2>
+      <div class="formulario">
 
-      <form action="{% url 'cadastro_operacao' %}" id="formularioProjeto" method="POST">
-        {% csrf_token %}
+        <h2 id="formTitle">Assinatura do termo</h2>
 
-        <div class="elementos">
-          <label for="n_projeto">Nº do Projeto:</label>
-          <select  id="n_projeto" name="n_projeto">
-            {% for projeto in projetos %}
-              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
-            {% endfor %}
-          </select>
-        </div>
+        <form action="{% url 'cadastro_operacao' %}" id="formularioProjeto" method="POST">
+          {% csrf_token %}
+
+          <div class="elementos">
+            <label for="n_projeto">Nº do Projeto:</label>
+            <select  id="n_projeto" name="n_projeto">
+              {% for projeto in projetos %}
+                <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+              {% endfor %}
+            </select>
+          </div>
         
-        <div class="elementos">
-          <label for="data_operacao">Data assinatura do termo:</label>
-          <input type="date" id="data_operacao" name="data_operacao" required>
-        </div>
+          <div class="elementos">
+            <label for="data_operacao">Data assinatura do termo:</label>
+            <input type="date" id="data_operacao" name="data_operacao" required>
+          </div>
 
-        <div class="elementos">
-          <input type="hidden" id="nome_operacao" name="nome_operacao" value="Assinatura do termo PRESI">
-        </div>
+          <div class="elementos">
+            <input type="hidden" id="nome_operacao" name="nome_operacao" value="Assinatura do termo PRESI">
+          </div>
 
-        <div class="elementos">
-          <button type="submit">Enviar</button>
-        </div>
+          <div class="elementos">
+            <button type="submit">Enviar</button>
+          </div>
 
-      </form>
+        </form>
+
+      </div>
+
+      <div id="resultado"></div>
 
       <script>
         document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
