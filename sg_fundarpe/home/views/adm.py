@@ -7,5 +7,7 @@ def homepage(request):
     users = Usuario.objects.all()
     operacoes = Operacao.objects.all()
     pagamentos = Pagamento.objects.all()
+    for pagamento in pagamentos:
+        print(pagamento)
     return render(request, 'home/adm.html', {'users': users, 'operações': operacoes, 'projetos': projetos, 'pagamentos': pagamentos})
 

@@ -5,11 +5,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'unat.css' %}">
+  <link rel="stylesheet" href="{% static 'adm.css' %}">
   <script src="{% static 'barraPesquisa.js' %}" type="text/javascript" refer></script>
   <title>Fundarpe - Admin</title>
 </head>
 <body>
+    <br>
   <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT">
   <h1>Administração</h1>
 
@@ -48,22 +49,22 @@
       <tbody>
         {% for pagamento in pagamentos %}
         <tr>
-          <td>{{ pagamento.n_projeto.titulo_projeto }}</td>
-          <td>{{ pagamento.valor }}</td>
-          <td>{{ pagamento.parcelas_totais }}</td>
-          <td>{{ pagamento.parcelas_pagas }}</td>
-          <td>{{ pagamento.status }}</td>
-        </tr>
+            <td>{{ pagamento.n_projeto.titulo_projeto }}</td>
+            <td class="coluna-valor">{{ pagamento.valor_solicitado }}</td>
+            <td class="coluna-numero">{{ pagamento.n_parcelas }}</td>
+            <td class="coluna-numero">{{ pagamento.n_parcelas_pagas }}</td>
+            <td>{{pagamento.status_pagamento}}</td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
   
   <div id="listaDepartamentos" class="listaProcessos" style="display: none;">
-    <!-- Seu código para a lista de departamentos aqui -->
+    
   </div>
   
-  <button id="myBtn">Criar um novo projeto</button>
+  <!-- <button id="myBtn">Criar um novo projeto</button> -->
   
   <div id="myModal" class="modal">
     <!-- O restante do seu código aqui -->
