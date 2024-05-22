@@ -19,7 +19,7 @@
     </ul>
   </div>
         
-  <div id="form2" class="form" >
+  <div id="form2" class="form">
     <h2>Confecção do Termo </h2>
     <form action="{% url 'cadastrar_asju' %}" id="formularioProjeto" method="POST">
       {% csrf_token %}
@@ -31,6 +31,10 @@
           {% endfor %}
         </select>
         <br>
+        
+        <label for="n_termoaceite">Nº do Termo:</label>
+        <input type="number" id="n_termoaceite" name="n_termoaceite" required><br>
+  
         <label for="data_operacao">Data assinatura do termo:</label>
         <input type="date" id="data_operacao" name="data_operacao" required><br>
         

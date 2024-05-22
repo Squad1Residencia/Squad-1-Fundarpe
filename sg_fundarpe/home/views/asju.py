@@ -18,12 +18,14 @@ def cadastrar_operacao(request):
         n_projeto = request.POST.get('n_projeto')
         nome_operacao = request.POST.get('nome_operacao')
         data_operacao = request.POST.get('data_operacao')
-        
+        n_termoaceite = request.POST.get('n_termoaceite')
+
         projeto = Projeto.objects.filter(n_projeto=n_projeto).first()
         if not projeto:
             return HttpResponse("Projeto não encontrado", status=400)
 
         # Adiciona o status do projeto
+        projeto.n_termoaceite = n_termoaceite
         projeto.status_projeto = '6'    
         projeto.save()
 

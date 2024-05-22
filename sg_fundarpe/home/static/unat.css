@@ -207,3 +207,12 @@ button#myBtn:hover {
 .elementos button:hover {
     background-color: #003366;
 }
+
+.menu-btn {
+    display: inline-block; /* Exibe os botões lado a lado */
+    margin-right: 10px; /* Adiciona um espaço à direita de cada botão */
+  }
+  
+  .menu-btn:last-child {
+    margin-right: 0; /* Remove o espaço à direita do último botão */
+  }

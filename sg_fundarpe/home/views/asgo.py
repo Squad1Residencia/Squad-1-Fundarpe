@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from home.models import Projeto, Operacao 
 from datetime import datetime
 
-#@login_required
+@login_required
 def homepage(request):
     # Verificar se o usuário pertence ao departamento 'asgo'
     if request.user.departamento != 'asgo':

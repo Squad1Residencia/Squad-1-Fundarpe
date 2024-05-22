@@ -1,34 +1,86 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administração</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'unat.css' %}">
+  <script src="{% static 'barraPesquisa.js' %}" type="text/javascript" refer></script>
+  <title>Fundarpe - Admin</title>
 </head>
 <body>
-  <h1>Usuários</h1>
-  <ul>
-  {% for user in users %}
-      <li>{{ user.id_usuario }} - {{ user.username }} - Departamento: {{ user.departamento }}</li>
-  {% endfor %}
-  </ul>
+  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT">
+  <h1>Administração</h1>
 
-    <h1>Cadastrar Usuário</h1>
-    <form method="post">
-        {% csrf_token %}
-        
-        <label for="username">Nome de usuário:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="departamento">Departamento:</label>
-        <select id="departamento" name="departamento" required>
-        {% for departamento in departamentos %}
-            <option value="{{ departamento }}">{{ departamento }}</option>
+  <div class="menu">
+    <button id = "myBtn" class="myBtn menu-btn" onclick="showList('listaProjetos')">Projetos</button>
+    <button id = "myBtn" class="myBtn menu-btn" onclick="showList('listaPagamentos')">Pagamentos</button>
+    <button id = "myBtn" class="myBtn menu-btn" onclick="showList('listaDepartamentos')">Departamentos</button>
+  </div>
+  
+  <div id="listaProjetos" class="listaProcessos">
+    <input type="text" id="myInput" onkeyup="filterProjects()" placeholder="Pesquisar Processo">
+    
+    <ul id="myUL">
+      {% for projeto in projetos %}
+      <li>
+        {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
+        <a href="#" class="editar" data-n_projeto="{{ projeto.n_projeto }}">Editar</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  </div>
+  
+  <div id="listaPagamentos" class="listaProcessos" style="display: none;">
+    <h2 style="margin-bottom: 5px;">Pagamentos</h2>
+    <table id="tabelaPagamentos">
+      <thead>
+        <tr>
+          <th>Projetos</th>
+          <th>Valor</th>
+          <th>Parcelas Totais</th>
+          <th>Parcelas Pagas</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pagamento in pagamentos %}
+        <tr>
+          <td>{{ pagamento.n_projeto.titulo_projeto }}</td>
+          <td>{{ pagamento.valor }}</td>
+          <td>{{ pagamento.parcelas_totais }}</td>
+          <td>{{ pagamento.parcelas_pagas }}</td>
+          <td>{{ pagamento.status }}</td>
+        </tr>
         {% endfor %}
-        </select>
-        <button type="submit">Criar usuário</button>
-    </form>
-    {% if password %}
-    <p>A senha do novo usuário é: {{ password }}</p>
-    {% endif %}
-</body>
-</html>
+      </tbody>
+    </table>
+  </div>
+  
+  <div id="listaDepartamentos" class="listaProcessos" style="display: none;">
+    <!-- Seu código para a lista de departamentos aqui -->
+  </div>
+  
+  <button id="myBtn">Criar um novo projeto</button>
+  
+  <div id="myModal" class="modal">
+    <!-- O restante do seu código aqui -->
+  </div>
+  
+  <!-- O restante do seu código aqui -->
+  
+  <script>
+    function showList(listId) {
+      // Ocultar todas as listas
+      document.getElementById('listaProjetos').style.display = 'none';
+      document.getElementById('listaPagamentos').style.display = 'none';
+      document.getElementById('listaDepartamentos').style.display = 'none';
+  
+      // Mostrar a lista selecionada
+      document.getElementById(listId).style.display = 'block';
+    }
+  </script>
+  </body>
+  </html>
