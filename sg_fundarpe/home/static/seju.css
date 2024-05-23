@@ -16,6 +16,7 @@ body{
 }
 
 h1{
+    text-align: center;
     margin-top: 20px;
     color: #004080;
     font-size: 24px;
@@ -26,9 +27,9 @@ h1{
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    width: 80%;
+    width: 100%;
     max-width: 600px;
-    height: 400px; /* Altura fixa */
+    height: 450px; /* Altura fixa */
     margin: 20px 0;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     overflow-y: auto; /* Barra de rolagem vertical quando necessário */
@@ -44,7 +45,7 @@ h1{
 }
 
 .listaProcessos input {
-    width: 100%;
+    width: 50%;
     padding: 12px;
     margin-bottom: 12px;
     border: 1px solid #ccc;
@@ -166,23 +167,17 @@ button#myBtn:hover {
     text-decoration: none;
 }
 
-.formulario {
+.elementos {
+    z-index: 2;
     display: flex;
     flex-direction: column;
-}
-
-.formulario h2 {
-    margin-bottom: 20px;
-    color: #004080;
-}
-
-.elementos {
     margin-bottom: 15px;
 }
 
 .elementos label {
     display: block;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     color: #333;
 }
 

@@ -23,20 +23,26 @@
   <h2>Adicionar Informações</h2>
   <form action="{% url 'cadastrar_empenho'%}" id="formularioProjeto" method="post">
     {% csrf_token %}
-    Projeto: <big><u id="nome_projeto"></u></big><br>
+    
+    Projeto: <big><u id="nome_projeto"></u></big>
+    
     <label for="n_projeto">Nº do Projeto:</label>
     <input list="projetos" id="n_projeto" name="n_projeto" required>
+
     <datalist id="projetos">
       {% for projeto in projetos %}
         <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
       {% endfor %}
-      </datalist><br>
+    </datalist>
+
     <label for="n_empenho">Número do empenho:</label>
-    <input type="number" id="n_empenho" name="n_empenho" required><br>
+    <input type="number" id="n_empenho" name="n_empenho" required>
+
     <label for="data_empenho">Data de confecção do empenho:</label>
-    <input type="date" id="data_empenho" name="data_empenho" required><br>
+    <input type="date" id="data_empenho" name="data_empenho" required>
 
     <button type="submit">Adicionar</button>
+
   </form>
   <div id="resultado"></div>
   <script>

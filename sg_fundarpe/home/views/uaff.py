@@ -3,14 +3,14 @@ from django.shortcuts import render, redirect
 from home.models import Projeto, Operacao #chamar tabelas que serão utilizadas
 from django.http import HttpResponse, HttpResponseForbidden
 
-@login_required
+# @login_required
 def homepage(request):
-    if request.user.departamento != 'uaff':
-        return redirect('/login/')
+    # if request.user.departamento != 'uaff':
+    #     return redirect('/login/')
     projetos = Projeto.objects.all() 
     return render(request, 'home/uaff.html', {'projetos': projetos})
 
-@login_required
+# @login_required
 def cadastro_uaff(request):
     if request.method == 'POST':
         # Obtém os dados do formulário
