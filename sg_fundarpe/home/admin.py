@@ -19,12 +19,19 @@ class OperacaoAdmin(admin.ModelAdmin):
         return obj.id_usuario.username
     get_id_usuario.short_description = 'Usuário'  
 
-
 class ProjetoAdmin(admin.ModelAdmin):
     list_display = ('n_projeto', 'titulo_projeto', 'status_projeto')
+
+class PagamentoAdmin(admin.ModelAdmin):
+    list_display = ('projeto_titulo', 'valor_solicitado', 'n_parcelas', 'n_parcelas_pagas', 'status_pagamento', 'descricao')
+
+    def projeto_titulo(self, obj):
+        return obj.n_projeto.titulo_projeto
+    projeto_titulo.short_description = 'Título do Projeto'
+
 
 
 admin.site.register(Usuario, UsuarioAdmin)
 admin.site.register(Projeto, ProjetoAdmin)
-admin.site.register(Pagamento)
+admin.site.register(Pagamento, PagamentoAdmin)
 admin.site.register(Operacao, OperacaoAdmin)

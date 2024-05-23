@@ -209,3 +209,41 @@ button#myBtn:hover {
 }
 
 
+
+.menu-btn {
+    display: inline-block; /* Exibe os botões lado a lado */
+    margin-right: 10px; /* Adiciona um espaço à direita de cada botão */
+  }
+  
+  .menu-btn:last-child {
+    margin-right: 0; /* Remove o espaço à direita do último botão */
+  }
+
+  #tabelaPagamentos {
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  #tabelaPagamentos td, #tabelaPagamentos th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  #tabelaPagamentos tr:nth-child(even){background-color: #f2f2f2;}
+  #tabelaPagamentos tr:hover {background-color: #ddd;}
+  #tabelaPagamentos th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #003366;
+    color: white;
+  }
+
+.coluna-numero {
+    width: 25px; 
+}
+.coluna-numero {
+    width: 25px; 
+}
+.coluna-valor {
+    width: 100px; 
+}

@@ -42,9 +42,21 @@ class Pagamento(models.Model):
     n_projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE)
     valor_solicitado = models.DecimalField(max_digits=10, decimal_places=2)
     n_parcelas = models.PositiveSmallIntegerField()
+    n_parcelas_pagas = models.PositiveSmallIntegerField(null=True)
     status_pagamento = models.TextField(null=True)
     descricao = models.TextField(null=True)
 
     def __str__(self):
-        return self.n_projeto.titulo_projeto
+        return "{} - Valor: {} - Parcelas: {} - Parcelas Pagas: {} - Status: {} - Descrição: {}".format(
+        self.n_projeto.titulo_projeto, 
+        self.valor_solicitado, 
+        self.n_parcelas, 
+        self.n_parcelas_pagas, 
+        self.status_pagamento,  
+        self.descricao
+    )
+    
+    
+    
+    #  return f'Projeto: {self.n_projeto.titulo_projeto}, Valor Solicitado: {self.valor_solicitado}, Número de Parcelas: {self.n_parcelas}, Número de parcelas pagas: {self.n_parcelas_pagas},Status do Pagamento: {self.status_pagamento}, Descrição: {self.descricao}'
     
