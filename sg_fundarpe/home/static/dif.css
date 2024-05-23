@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    background-color: #f4f4f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+h1{
+    text-align: center;
+    margin-top: 20px;
+    color: #004080;
+    font-size: 24px;
+}
+
+.listaProcessos {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    height: 450px; /* Altura fixa */
+    margin: 20px 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow-y: auto; /* Barra de rolagem vertical quando necessário */
+    position: relative;
+}
+
+.listaProcessos input{
+    align-items: center;
+    position: sticky;
+    width: 100%;
+}
+
+.listaProcessos h2 {
+    margin-bottom: 5px;
+    text-align: center;
+    top: 0;
+    background: #fff;
+}
+
+.listaProcessos input {
+    width: 50%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.listaProcessos h2 {
+    margin-top: 0;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+button#myBtn {
+    background-color: #004080;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px 0;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button#myBtn:hover {
+    background-color: #003366;
+}
+
+.elementos {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.elementos label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.elementos input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.elementos button {
+    background-color: #004080;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.elementos button:hover {
+    background-color: #003366;
+}

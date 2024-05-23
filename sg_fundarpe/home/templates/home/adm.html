@@ -1,33 +1,287 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administração</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'adm.css' %}">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+  <script src="{% static 'barraPesquisa.js' %}" type="text/javascript" refer></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Fundarpe - Admin</title>
 </head>
 <body>
-  <h1>Usuários</h1>
-  <ul>
-  {% for user in users %}
-      <li>{{ user.id_usuario }} - {{ user.username }} - Departamento: {{ user.departamento }}</li>
-  {% endfor %}
-  </ul>
+  <br>
+  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT" style="width: 200px; height: 61px;">
+  <h1>Administração</h1>
+  <a href="{% url 'generate_pdf' %}" class="btn btn-primary">
+    <i class="fas fa-file-alt fa-lg"></i>
+  </a>
 
-    <h1>Cadastrar Usuário</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="username">Nome de usuário:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="departamento">Departamento:</label>
-        <select id="departamento" name="departamento" required>
-        {% for departamento in departamentos %}
-            <option value="{{ departamento }}">{{ departamento }}</option>
+  <div class="menu">
+    <button id="myBtn" class="myBtn menu-btn" onclick="showList('listaProjetos')">Projetos</button>
+    <button id="myBtn" class="myBtn menu-btn" onclick="showList('listaPagamentos')">Pagamentos</button>
+    <button id="myBtn" class="myBtn menu-btn" onclick="showList('listaDepartamentos')">Usúarios</button>
+  </div>
+
+  <!-- PROJETOS -->
+  <div id="listaProjetos" class="listaProcessos">
+    <input type="text" id="myInput" onkeyup="filterProjects()" placeholder="Pesquisar Processo">
+    <ul id="myUL">
+      {% for projeto in projetos %}
+      <li>
+        {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
+        <a href="#" class="" data-n_projeto="{{ projeto.n_projeto }}"onclick="abrirModal('{{ projeto.n_projeto }}')">
+            <i class="fas fa-eye"></i> 
+          </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Modal Projetos  -->
+  <div id="meuModal" class="modal">
+    <div class="conteudoModal">
+        <span class="X">&times;</span>
+            <h2 style="margin-bottom: 5px;">Detalhes do Projeto</h2>
+        <table id="tabelaProjetos">
+            <tbody>
+                <tr>
+                    <td class="coluna-nome">Número do Projeto:</td>
+                    <td id="n_projeto"></td>
+                </tr>
+                <tr>
+                    <td class="coluna-nome">Título do Projeto:</td>
+                    <td id="titulo_projeto"></td>
+                </tr>
+                <tr>
+                    <td class="coluna-nome">Número SEI:</td>
+                    <td id="n_sei"></td>
+                </tr>
+                <tr>
+                    <td class="coluna-nome">Número do Empenho:</td>
+                    <td id="n_empenho"></td>
+                </tr>
+                <tr>
+                    <td class="coluna-nome">Data da Solicitação:</td>
+                    <td id="data_solicitacao"></td>
+                </tr>
+                <tr>
+                    <td class="coluna-nome">Status do Projeto:</td>
+                    <td id="status_projeto"></td>
+                </tr>
+                <tr>
+                    <td class="coluna-nome">Número do Termo de Aceite:</td>
+                    <td id="n_termoaceite"></td>
+                </tr>
+                <tr>
+                    <td class="coluna-nome">Responsável pelo Termo:</td>
+                    <td id="reponsavel_termo"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+  <!-- PAGAMENTOS -->
+  <div id="listaPagamentos" class="listaProcessos" style="display: none;">
+    <h2 style="margin-bottom: 5px;">Pagamentos <i class="fas fa-chart-pie" onclick="showList('listaGraficos')"></i></h2>
+    <table id="tabelaPagamentos">
+      <thead>
+        <tr>
+          <th>Projetos</th>
+          <th>Valor</th>
+          <th>Parcelas Pagas</th>
+          <th>Parcelas Totais</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for pagamento in pagamentos %}
+        <tr>
+          <td class="coluna-nome">{{ pagamento.n_projeto.titulo_projeto }}</td>
+          <td class="coluna-valor">{{ pagamento.valor_solicitado }}</td>
+          <td class="coluna-numero">{{ pagamento.n_parcelas_pagas }}</td>
+          <td class="coluna-numero">{{ pagamento.n_parcelas }}</td>
+          <td>{{ pagamento.status_pagamento }}</td>
+        </tr>
         {% endfor %}
-        </select>
-        <button type="submit">Criar usuário</button>
-    </form>
-    {% if password %}
-    <p>A senha do novo usuário é: {{ password }}</p>
-    {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GRAFICOS -->
+  <div id="listaGraficos" class="listaProcessos" style="display: none;">
+    <a href="#" onclick="showList('listaPagamentos')"><i class="fas fa-arrow-left"></i></a>
+    <h2 style="margin-bottom: 5px;">Gráficos</h2>
+    <div class="graficos">
+      <canvas id="barChart" width="70" height="40"></canvas>
+      <hr>
+      <canvas id="barChartProjetos"></canvas>    
+    </div>
+  </div>
+
+  <!-- DEPARTAMENTOS -->
+  <!-- DEPARTAMENTOS -->
+<div id="listaDepartamentos" class="listaProcessos" style="display: none;">
+    <table id="tabelaUsuarios">
+      <thead>
+        <tr>
+          <th>Usuário</th>
+          <th>Departamento</th>
+            <th>Operação</th>
+          <th>Quantidade de Operações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dados in dados_usuario %}
+          <tr>
+            <td>{{ dados.usuario.username }}</td>
+            <td>{{ dados.usuario.departamento }}</td>
+            {% if dados.ultima_operacao %}
+            <td>{{ dados.ultima_operacao.nome_operacao }}</td>
+            {% else %}
+            <td>Nenhuma operação encontrada</td>
+            {% endif %}
+                <td>{{ dados.numero_operacoes }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="{% static 'barraPesquisa.js' %}" type="text/javascript"></script>
+
+  <script>
+    function showList(listId) {
+      document.getElementById('listaProjetos').style.display = 'none';
+      document.getElementById('listaPagamentos').style.display = 'none';
+      document.getElementById('listaDepartamentos').style.display = 'none';
+      document.getElementById('listaGraficos').style.display = 'none';
+      document.getElementById(listId).style.display = 'block';
+    }
+  </script>
+
+  <!-- Tabela Pagamentos -->
+  <script>
+    $(document).ready(function() {
+      $('#tabelaPagamentos').DataTable({
+        "paging": false,
+        "info": false,
+        "language": {
+          "search": "_INPUT_",
+          "searchPlaceholder": "Filtrar"
+        }
+      });
+    });
+    $(document).ready(function() {
+  $('#tabelaUsuarios').DataTable({
+    "paging": false,
+    "info": false,
+    "language": {
+      "search": "_INPUT_",
+      "searchPlaceholder": "Filtrar"
+    }
+  });
+});
+  </script>
+  <!-- Grafico de Barras valor pago -->
+  <script>
+    let valorPago = {{ valor_pago }};
+    let valorASerPago = {{ valor_a_ser_pago }};
+    let ctx1 = document.getElementById('barChart').getContext('2d');
+    new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: ['Valor Pago', 'Valor Pendente'],
+        datasets: [{
+          data: [valorPago, valorASerPago],
+          backgroundColor: ['rgba(0, 64, 128, 0.8)', 'rgba(255, 191, 127, 0.9)']
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+  </script>
+  <!-- Grafico de barras projeto -->
+  <script>
+    let projetosConcluidos = {{ projetos_concluidos }};
+    let projetosPendentes = {{ projetos_em_andamento }};
+    let ctxProjetos = document.getElementById('barChartProjetos').getContext('2d');
+    new Chart(ctxProjetos, {
+      type: 'bar',
+      data: {
+        labels: ['Concluído', 'Pendente'],
+        datasets: [{
+          label: 'Projetos',
+          data: [projetosConcluidos, projetosPendentes],
+          backgroundColor: ['rgba(0, 64, 128, 0.8)', 'rgba(255, 191, 127, 0.9)']
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+  </script>
+
+  <!-- Fechar Modal -->
+  <script>
+    // Fechar o modal ao clicar fora dele
+    window.addEventListener('click', function(event) {
+      var modal = document.getElementById('meuModal');
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Fechar o modal ao clicar no X
+    document.querySelector('.X').addEventListener('click', function() {
+      document.getElementById('meuModal').style.display = 'none';
+    });
+  </script>
+ 
+  <!-- MODAL -->
+  <script>
+    function abrirModal(n_projeto) {
+      // Fazer uma solicitação para a rota que retorna os dados do projeto
+      fetch('/adm/projeto/'+ n_projeto)
+        .then(response => response.json())
+        .then(projeto => {
+          // Preencher o modal com as informações do projeto
+          document.getElementById('n_projeto').innerText = projeto.n_projeto;
+          document.getElementById('titulo_projeto').innerText = projeto.titulo_projeto;
+          document.getElementById('n_sei').innerText = projeto.n_sei;
+          document.getElementById('n_empenho').innerText = projeto.n_empenho;
+          document.getElementById('data_solicitacao').innerText = projeto.data_solicitacao;
+          document.getElementById('status_projeto').innerText = projeto.status_projeto;
+          document.getElementById('n_termoaceite').innerText = projeto.n_termoaceite;
+          document.getElementById('reponsavel_termo').innerText = projeto.reponsavel_termo;
+
+          // Exibir o modal
+          document.getElementById('meuModal').style.display = "block";
+        });
+    }
+  </script>
 </body>
 </html>

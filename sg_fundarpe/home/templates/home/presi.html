@@ -1,41 +1,64 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <script src="{% static 'barraPesquisa.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'seju.css' %}">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fundarpe - PRESI</title>
 </head>
 <body>
+
+  <br>
+  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT" style="width: 200px; height: 61px;">
+
   <h1>PRESI</h1>
-  <div>
-    <h2>Projetos: </h2>
-    <ul>
-    <!-- Implementacao do READ com um for. -->
-    {% for projeto in projetos %}
-    <li>
-      {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
-      <a href="#">Editar</a>
-    </li>
-  {% endfor %}
-    </ul>
+  
+  <div class="listaProcessos">
+      
+    <div class="formulario">
+      <h2 id="formTitle">Assinatura do termo</h2>
+  
+      <form action="{% url 'cadastro_operacao' %}" id="formularioProjeto" method="POST">
+        {% csrf_token %}
+  
+        <div class="elementos">
+          <label for="n_projeto">Nº do Projeto:</label>
+          <input type="text" id="n_projeto" name="n_projeto" list="projetos_datalist">
+      
+          <datalist id="projetos_datalist">
+              {% for projeto in projetos %}
+                  <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+              {% endfor %}
+          </datalist>
+      </div>
+        
+        <div class="elementos">
+          <label for="data_operacao">Data assinatura do termo:</label>
+          <input type="date" id="data_operacao" name="data_operacao" required>
+        </div>
+  
+        <div class="elementos">
+          <input type="hidden" id="nome_operacao" name="nome_operacao" value="Assinatura do termo PRESI">
+        </div>
+  
+        <div class="elementos">
+          <button type="submit">Enviar</button>
+        </div>
+  
+      </form>
+    </div>
   </div>
 
-  <h2>Cadastrar Projeto</h2>
-  <form action="{% url 'funcaoquevocecriou' %}" id="formularioProjeto" method="post">
-    {% csrf_token %}
-    <label for="Exemplo">Exemplo:</label>
-    <input type="text" id="Exemplo" name="Exemplo" required><br>
+  <div class="resultado"></div>
 
-
-    <button type="submit">Enviar</button>
-  </form>
-  <div id="resultado"></div>
   <script>
     document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
       document.getElementById("resultado").innerText = "enviado com sucesso!";
 
     });
   </script>
- 
+
 </body>
 </html>
