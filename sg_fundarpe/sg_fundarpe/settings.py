@@ -87,7 +87,8 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '123123',
         'HOST': 'localhost',   # Ou o endereço do seu servidor MySQL
-        'PORT': '3306',        # A porta padrão do MySQL é 3306
+        'PORT': '3306',
+        'HOST': '127.0.0.1',  # Use '127.0.0.1' for PythonAnywhere's internal database
     }
 }
 
