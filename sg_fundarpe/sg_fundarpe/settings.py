@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gerenciamento_fundarpe',
         'USER': 'root',
-        'PASSWORD': '123123',
+        'PASSWORD': 'Limao123,',
         'HOST': 'localhost',   # Ou o endereço do seu servidor MySQL
         'PORT': '3306',
         'HOST': '127.0.0.1',  # Use '127.0.0.1' for PythonAnywhere's internal database
