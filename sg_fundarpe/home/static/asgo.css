@@ -5,7 +5,7 @@
     font-family: Arial, sans-serif;
 }
 
-body{
+body {
     background-color: #f4f4f9;
     display: flex;
     flex-direction: column;
@@ -15,8 +15,7 @@ body{
     overflow-x: hidden;
 }
 
-h1{
-    text-align: center;
+h1 {
     margin-top: 20px;
     color: #004080;
     font-size: 24px;
@@ -27,30 +26,23 @@ h1{
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    width: 100%;
+    width: 80%;
     max-width: 600px;
-    height: 450px; /* Altura fixa */
+    height: 400px; /* Altura fixa */
     margin: 20px 0;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     overflow-y: auto; /* Barra de rolagem vertical quando necessário */
     position: relative;
 }
 
-.listaProcessos input{
-    align-items: center;
-    position: sticky;
-    width: 100%;
-}
-
+.listaProcessos input,
 .listaProcessos h2 {
-    margin-bottom: 5px;
-    text-align: center;
     top: 0;
     background: #fff;
 }
 
 .listaProcessos input {
-    width: 50%;
+    width: 100%;
     padding: 12px;
     margin-bottom: 12px;
     border: 1px solid #ccc;
@@ -62,6 +54,36 @@ h1{
     margin-top: 0;
     padding: 12px 0;
     border-bottom: 1px solid #ddd;
+}
+
+#myUL {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+#myUL li {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    background-color: #f6f6f6;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 18px;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#myUL li button {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#myUL li button:hover {
+    text-decoration: underline;
 }
 
 button#myBtn {
@@ -82,17 +104,23 @@ button#myBtn:hover {
     background-color: #003366;
 }
 
-.elementos {
-    z-index: 2;
+.formulario {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
+}
+
+.formulario h2 {
+    margin-bottom: 20px;
+    color: #004080;
+}
+
+.elementos {
+    margin-bottom: 8px;
 }
 
 .elementos label {
     display: block;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     color: #333;
 }
 
@@ -112,8 +140,11 @@ button#myBtn:hover {
     font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
+    margin-bottom: -15px;
 }
 
 .elementos button:hover {
     background-color: #003366;
 }
+
+

@@ -4,16 +4,16 @@ from django.shortcuts import render, redirect
 from home.models import Projeto, Operacao 
 from datetime import datetime
 
-@login_required
+# @login_required
 def homepage(request):
     # Verificar se o usuário pertence ao departamento 'asgo'
-    if request.user.departamento != 'asgo':
-        return redirect('/login/')
+    # if request.user.departamento != 'asgo':
+    #     return redirect('/login/')
 
     projetos = Projeto.objects.filter(n_empenho__isnull=True)  
     return render(request, 'home/asgo.html', {'projetos': projetos})
 
-@login_required
+# @login_required
 def cadastrar_empenho(request):
     if request.method == 'POST':
         # Obtém os dados do formulário

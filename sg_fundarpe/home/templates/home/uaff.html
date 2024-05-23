@@ -15,9 +15,9 @@
   <h1>UAFF</h1>
   
   <div class="menu">
-    <button id="myBtn" class="myBtn menu-btn" onclick="showlist('form1')">Conferência da Documentação</button>
-    <button id="myBtn" class="myBtn menu-btn" onclick="showlist('form2')">Envio para Confecção do Termo</button>
-    <button id="myBtn" class="myBtn menu-btn" onclick="showlist('form3')">Envio termo a proponente e recebimento doc assinado</button>
+    <button id="myBtn" class="myBtn menu-btn" onclick="showList('form1')">Conferência da Documentação</button>
+    <button id="myBtn" class="myBtn menu-btn" onclick="showList('form2')">Confecção do Termo</button>
+    <button id="myBtn" class="myBtn menu-btn" onclick="showList('form3')">Envio do Termo e Recebimento do Documento</button>
   </div>
 
   <div class="listaProcessos">
@@ -53,11 +53,9 @@
   
       <div class="resultado"></div>
   
-    </div>
-  
     <div id="form2" class="formularioProjeto" style="display: none;">
   
-      <h2>Envio para Confecção do Termo </h2>
+      <h2>Confecção do Termo </h2>
       
       <form action="{% url 'cadastro_uaff' %}" id="formularioProjeto" method="POST">
         {% csrf_token %}
@@ -90,7 +88,7 @@
     
     <div id="form3" class="formularioProjeto" style="display: none;">
   
-      <h2>Envio termo a proponente e recebimento doc assinado</h2>
+      <h2>Envio do Termo e Recebimento do Documento</h2>
       
       <form action="{% url 'cadastro_uaff1' %}" id="formularioProjeto" method="POST">
         {% csrf_token %}
