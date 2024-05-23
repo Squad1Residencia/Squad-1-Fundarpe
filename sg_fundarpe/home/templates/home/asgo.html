@@ -1,43 +1,71 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <script src="{% static 'barraPesquisa.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'asgo.css' %}">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fundarpe - ASGO</title>
 </head>
 <body>
+
+  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT">
+
   <h1>ASGO</h1>
-  <div>
+
+  <div class="listaProcessos">
     <h2>Projetos: </h2>
-    <ul>
-    <!-- Implementacao do READ com um for. -->
-    {% for projeto in projetos %}
-    <li>
-      {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
-      <button class="add-button" n-projeto="{{ projeto.n_projeto }}">+</button>
-    </li>
-  {% endfor %}
-    </ul>
-  </div>
 
-  <h2>Adicionar Informações</h2>
-  <form action="{% url 'cadastrar_empenho'%}" id="formularioProjeto" method="post">
-    {% csrf_token %}
-    Projeto: <big><u id="nome_projeto"></u></big><br>
-    <label for="n_projeto">Nº do Projeto:</label>
-    <input list="projetos" id="n_projeto" name="n_projeto" required>
-    <datalist id="projetos">
+    <input type="text" id="myInput" onkeyup="filterProjects()" placeholder="Pesquisar Projeto">
+
+    <ul id="myUL">
+      <!-- Implementacao do READ com um for. -->
       {% for projeto in projetos %}
-        <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+      <li>
+        {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
+        <button class="add-button" n-projeto="{{ projeto.n_projeto }}" onclick="document.getElementById('formTitle').scrollIntoView({ behavior: 'smooth' });">+</button>
+      </li>
       {% endfor %}
-      </datalist><br>
-    <label for="n_empenho">Número do empenho:</label>
-    <input type="number" id="n_empenho" name="n_empenho" required><br>
-    <label for="data_empenho">Data de confecção do empenho:</label>
-    <input type="date" id="data_empenho" name="data_empenho" required><br>
+    </ul>
+  
+    <div class="formulario" style="position: sticky;">
+      <h2 id="formTitle">Adicionar Informações</h2>
+      <form action="{% url 'cadastrar_empenho'%}" id="formularioProjeto" method="post">
+        {% csrf_token %}
 
-    <button type="submit">Adicionar</button>
-  </form>
+        <div class="elementos">
+          Projeto: <big><u id="nome_projeto"></u></big>
+        </div>
+  
+        <div class="elementos">
+          <label for="n_projeto">Nº do Projeto:</label>
+          <input list="projetos" id="n_projeto" name="n_projeto" required>
+        </div>
+        
+        <datalist id="projetos">
+          {% for projeto in projetos %}
+            <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+          {% endfor %}
+        </datalist>
+  
+        <div class="elementos">
+          <label for="n_empenho">Número do empenho:</label>
+          <input type="number" id="n_empenho" name="n_empenho" required>
+        </div>
+        
+        <div class="elementos">
+          <label for="data_empenho">Data de confecção do empenho:</label>
+          <input type="date" id="data_empenho" name="data_empenho" required>
+        </div>
+  
+        <div class="elementos">
+          <button type="submit">Adicionar</button>
+        </div>
+    </div>
+
+    </form>
+  </div>
   <div id="resultado"></div>
   <script>
     document.getElementById("formularioProjeto").addEventListener("submit", function(event) {

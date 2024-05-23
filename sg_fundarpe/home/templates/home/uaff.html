@@ -1,126 +1,149 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <link rel="stylesheet" href="{% static 'dif.css' %}">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fundarpe - UAFF</title>
 </head>
 <body>
+
+
+  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT">
+
   <h1>UAFF</h1>
-  <div>
-    <h2>Operações: </h2>
-    <ul>
-    <!-- Implementacao do READ com um for. -->
-      {% for projeto in projetos %}
-      <li>
-        {{ projeto.n_projeto }} - {{ projeto.titulo_projeto }}
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
   
-  <select id="formSelect">
-    <option value="">Selecione uma ação</option>
-    <option value="form1">Conferência da Documentação</option>
-    <option value="form2">Envio para Confecção do Termo</option>
-    <option value="form3">Envio termo a proponente e recebimento doc assinado</option>
-  </select>
-  <div id="form1" class="form" style="display:none;">
-    <h2>Conferência da Documentação</h2>
-    <form action="{% url 'cadastro_uaff' %}" id="formularioProjeto" method="POST">
-      {% csrf_token %}
-      <div>
-        <label for="n_projeto">Nº do Projeto:</label>
-        <select  id="n_projeto" name="n_projeto">
-          {% for projeto in projetos %}
-            <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
-          {% endfor %}
-        </select>
-        <br>
-        
-  
-        <label for="data_operacao">Data Conferência da Documentação:</label>
-        <input type="date" id="data_operacao" name="data_operacao" required><br>
-  
-        <input type="hidden" id="nome_operacao" name="nome_operacao" value="Conferência da Documentação"><br>
-  
-        <button type="submit">Enviar</button>
-      </div>
-    </form>
+  <div class="menu">
+    <button id="myBtn" class="myBtn menu-btn" onclick="showList('form1')">Conferência da Documentação</button>
+    <button id="myBtn" class="myBtn menu-btn" onclick="showList('form2')">Confecção do Termo</button>
+    <button id="myBtn" class="myBtn menu-btn" onclick="showList('form3')">Envio do Termo e Recebimento do Documento</button>
   </div>
 
-  <div id="form2" class="form" style="display:none;">
-    <h2>Envio para Confecção do Termo </h2>
-    <form action="{% url 'cadastro_uaff' %}" id="formularioProjeto" method="POST">
-      {% csrf_token %}
-      <div>
-        <label for="n_projeto">Nº do Projeto:</label>
-        <select  id="n_projeto" name="n_projeto">
-          {% for projeto in projetos %}
-            <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
-          {% endfor %}
-        </select>
-        <br>
-        <label for="data_operacao">Data Envio para Confecção do Termo:</label>
-        <input type="date" id="data_operacao" name="data_operacao" required><br>
-        
-        <input type="hidden" id="nome_operacao" name="nome_operacao" value="Envio para Confecção do Termo"><br>
-  
-        <button type="submit">Enviar</button>
-      </div>
-    </form>
-  </div>
-  
-  <div id="form3" class="form" style="display:none;">
-    <h2>Envio termo a proponente e recebimento doc assinado</h2>
-    <form action="{% url 'cadastro_uaff1' %}" id="formularioProjeto" method="POST">
-      {% csrf_token %}
-      <div>
-        <label for="n_projeto">Nº do Projeto:</label>
-        <select  id="n_projeto" name="n_projeto">
-          {% for projeto in projetos %}
-            <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
-          {% endfor %}
-        </select>
-        <br>
+  <div class="listaProcessos">
+    <div id="form1" class="formularioProjeto">
 
-        <label for="data_envio">Data de Envio termo a proponente:</label>
-        <input type="date" id="data_envio" name="data_envio" required><br>
-        
-        <label for="data_recebimento">Data recebimento doc assinado:</label>
-        <input type="date" id="data_recebimento" name="data_recebimento" required><br>
+      <h2>Conferência da Documentação</h2>
+      
+      <form action="{% url 'cadastro_uaff' %}" id="formularioProjeto" method="POST">
+        {% csrf_token %}
   
-        <input type="hidden" id="nome_envio" name="nome_envio" value="Envio termo a proponente"><br>
-        <input type="hidden" id="nome_operacao" name="nome_operacao" value="Recebimento doc assinado"><br>
-        
-        <button type="submit">Enviar</button>
-      </div>
-    </form>
-    <div id="resultado"></div>
+          <label for="browser">Nº do Projeto:</label>
+          <input type="text" list="n_projeto" id="browser">
+  
+          <datalist id="n_projeto" name="n_projeto">
+            {% for projeto in projetos %}
+              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+            {% endfor %}
+          </datalist>
+  
+          <div class="elementos">
+            <label for="data_operacao">Data Conferência da Documentação:</label>
+            <input type="date" id="data_operacao" name="data_operacao" required>
+          </div>
+    
+          <input type="hidden" id="nome_operacao" name="nome_operacao" value="Conferência da Documentação">
+    
+          <div class="elementos">
+            <button type="submit">Enviar</button>
+          </div>
+          
+        </div>
+      </form>
+  
+      <div class="resultado"></div>
+  
+    <div id="form2" class="formularioProjeto" style="display: none;">
+  
+      <h2>Confecção do Termo </h2>
+      
+      <form action="{% url 'cadastro_uaff' %}" id="formularioProjeto" method="POST">
+        {% csrf_token %}
+  
+          <label for="browser">Nº do Projeto:</label>
+          <input type="text" list="n_projeto" id="browser">
+  
+          <datalist  id="n_projeto" name="n_projeto">
+            {% for projeto in projetos %}
+              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+            {% endfor %}
+          </datalist>
+  
+          <div class="elementos">
+            <label for="data_operacao">Data Envio para Confecção do Termo:</label>
+            <input type="date" id="data_operacao" name="data_operacao" required>
+          </div>
+          
+          <input type="hidden" id="nome_operacao" name="nome_operacao" value="Envio para Confecção do Termo">
+    
+          <div class="elementos">
+            <button type="submit">Enviar</button>
+          </div>
+  
+      </form>
+  
+      <div class="resultado"></div>
+  
+    </div>
+    
+    <div id="form3" class="formularioProjeto" style="display: none;">
+  
+      <h2>Envio do Termo e Recebimento do Documento</h2>
+      
+      <form action="{% url 'cadastro_uaff1' %}" id="formularioProjeto" method="POST">
+        {% csrf_token %}
+  
+          <label for="browser">Nº do Projeto:</label>
+          <input type="text" list="n_projeto" id="browser">
+  
+          <datalist id="n_projeto" name="n_projeto">
+            {% for projeto in projetos %}
+              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+            {% endfor %}
+          </datalist>
+  
+  
+          <div class="elementos">
+            <label for="data_envio">Data de Envio termo a proponente:</label>
+            <input type="date" id="data_envio" name="data_envio" required>
+          </div>
+          
+          <div class="elementos">
+            <label for="data_recebimento">Data recebimento doc assinado:</label>
+            <input type="date" id="data_recebimento" name="data_recebimento" required>
+          </div>
+    
+          <div class="elementos">
+            <input type="hidden" id="nome_envio" name="nome_envio" value="Envio termo a proponente">
+            <input type="hidden" id="nome_operacao" name="nome_operacao" value="Recebimento doc assinado">
+          </div>
+          
+          <div class="elementos">
+            <button type="submit">Enviar</button>
+          </div>
+          
+        </div>
+      </form>
+      <div id="resultado"></div>
+    </div>
   </div>
  
-
-  
-
-  
   <script>
     document.getElementById("formularioProjeto").addEventListener("submit", function(event) {
-      document.getElementById("resultado").innerText = "enviado com sucesso!";
+      document.getElementById("resultado").innerText = "Enviado com sucesso!";
+    });
+  </script>
 
-    });
-    document.getElementById('formSelect').addEventListener('change', function() {
-      // Hide all forms
-      var forms = document.getElementsByClassName('form');
-      for (var i = 0; i < forms.length; i++) {
-        forms[i].style.display = 'none';
-      }
-    
-      // Show the selected form
-      var selectedForm = document.getElementById(this.value);
-      if (selectedForm) {
-        selectedForm.style.display = 'block';
-      }
-    });
+  <script>
+    function showList(listId) {
+      // Ocultar todas as listas
+      document.getElementById('form1').style.display = 'none';
+      document.getElementById('form2').style.display = 'none';
+      document.getElementById('form3').style.display = 'none';
+
+      // Mostrar a lista selecionada
+      document.getElementById(listId).style.display = 'block';
+    }
   </script>
  
 </body>
