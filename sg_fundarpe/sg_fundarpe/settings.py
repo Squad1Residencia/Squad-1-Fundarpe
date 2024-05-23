@@ -83,12 +83,11 @@ WSGI_APPLICATION = 'sg_fundarpe.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'gerenciamento_fundarpe',
-        'USER': 'root',
+        'NAME': 'HugoRamosDev$default',
+        'USER': 'HugoRamosDev',
         'PASSWORD': 'Limao123,',
-        'HOST': 'localhost',   # Ou o endereço do seu servidor MySQL
+        'HOST': 'HugoRamosDev.mysql.pythonanywhere-services.com',
         'PORT': '3306',
-        'HOST': '127.0.0.1',  # Use '127.0.0.1' for PythonAnywhere's internal database
     }
 }
 
