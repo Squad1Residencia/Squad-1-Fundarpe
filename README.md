@@ -111,13 +111,13 @@ Tendo feito tudo corretamente, é só acessar o projeto no seu navegador atravé
 
 Exemplo: `http://127.0.0.1:8000/`
 ## 🖥Desenvolvedores
--Hugo Oliveira Ramos
--João Gabriel Matos Santos Maia
--Isaac Castro Silva
--Adonai Santos Fernandes
--Marcos Vinicius de Brito Prado
--Igor Pedro Bezerra Bispo Santos
--Gabriel Carmo Oliveira Lima
--Jorge Célio do Prado Nascimento Júnior
--Pedro Henrique Marafelli Costa
--
+- Hugo Oliveira Ramos
+- João Gabriel Matos Santos Maia
+- Isaac Castro Silva
+- Adonai Santos Fernandes
+- Marcos Vinicius de Brito Prado
+- Igor Pedro Bezerra Bispo Santos
+- Gabriel Carmo Oliveira Lima
+- Jorge Célio do Prado Nascimento Júnior
+- Pedro Henrique Marafelli Costa
+
