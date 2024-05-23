@@ -9,7 +9,7 @@
 </head>
 <body>
 
-  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT">
+  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT" style="width: 200px; height: 61px;">
 
   <h1>DIF</h1>
 
@@ -29,15 +29,14 @@
         <div>
           
           <div class="elementos">
-            <label for="browser">Nº do Projeto:</label>
-            <input type="text" list="n_projeto" id="browser" required>
-          </div>
-  
-          <datalist id="n_projeto" name="n_projeto">
+            <label for="n_projeto">Nº do Projeto:</label>
+            <input type="text" list="projetos_datalist" id="n_projeto" name="n_projeto" required>
+        </div>
+        <datalist id="projetos_datalist">
             {% for projeto in projetos %}
-              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+                <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
             {% endfor %}
-          </datalist>
+        </datalist>
           
           <div class="elementos">
             <label for="data_operacao">Data autorização de empenho:</label>
@@ -61,15 +60,14 @@
       <form action="{% url 'cadastrar_operacao' %}" id="formularioProjeto" method="POST">
         {% csrf_token %}
       
-          <div class="elementos">
-            <label for="browser">Nº do Projeto:</label>
-            <input type="text" list="n_projeto" id="browser">
+            <div class="elementos">
+              <label for="n_projeto">Nº do Projeto:</label>
+              <input type="text" list="projetos_datalist" id="n_projeto" name="n_projeto" required>
           </div>
-  
-          <datalist id="n_projeto" name="n_projeto">
-            {% for projeto in projetos %}
-              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
-            {% endfor %}
+          <datalist id="projetos_datalist">
+              {% for projeto in projetos %}
+                  <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+              {% endfor %}
           </datalist>
   
           <div class="elementos">
@@ -94,15 +92,14 @@
         {% csrf_token %}
   
           <div class="elementos">
-            <label for="n_projeto">Nº do Projeto:</label>
-            <input type="text" list="n_projeto" id="browser">
-          </div>
-          
-          <datalist  id="n_projeto" name="n_projeto">
-            {% for projeto in projetos %}
-              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
-            {% endfor %}
-          </datalist>
+    <label for="n_projeto">Nº do Projeto:</label>
+    <input type="text" list="projetos_datalist" id="n_projeto" name="n_projeto" required>
+</div>
+<datalist id="projetos_datalist">
+    {% for projeto in projetos %}
+        <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+    {% endfor %}
+</datalist>
   
           <div class="elementos">
             <label for="data_operacao">Data de envio para pagamento:</label>

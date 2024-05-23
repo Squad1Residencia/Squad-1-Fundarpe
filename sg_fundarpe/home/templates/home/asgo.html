@@ -10,7 +10,8 @@
 </head>
 <body>
 
-  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT">
+  <br>
+  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT" style="width: 200px; height: 61px;">
 
   <h1>ASGO</h1>
 
@@ -40,14 +41,14 @@
   
         <div class="elementos">
           <label for="n_projeto">Nº do Projeto:</label>
-          <input list="projetos" id="n_projeto" name="n_projeto" required>
-        </div>
-        
-        <datalist id="projetos">
+          <input list="projetos_datalist" id="n_projeto" name="n_projeto" required>
+      </div>
+      
+      <datalist id="projetos_datalist">
           {% for projeto in projetos %}
-            <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
           {% endfor %}
-        </datalist>
+      </datalist>
   
         <div class="elementos">
           <label for="n_empenho">Número do empenho:</label>

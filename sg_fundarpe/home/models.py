@@ -42,7 +42,7 @@ class Pagamento(models.Model):
     n_projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE)
     valor_solicitado = models.DecimalField(max_digits=10, decimal_places=2)
     n_parcelas = models.PositiveSmallIntegerField()
-    n_parcelas_pagas = models.PositiveSmallIntegerField(null=True)
+    n_parcelas_pagas = models.PositiveSmallIntegerField(default=0)
     status_pagamento = models.TextField(null=True)
     descricao = models.TextField(null=True)
 

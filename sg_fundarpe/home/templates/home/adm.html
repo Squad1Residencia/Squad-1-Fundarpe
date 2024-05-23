@@ -18,6 +18,9 @@
   <br>
   <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT" style="width: 200px; height: 61px;">
   <h1>Administração</h1>
+  <a href="{% url 'generate_pdf' %}" class="btn btn-primary">
+    <i class="fas fa-file-alt fa-lg"></i>
+  </a>
 
   <div class="menu">
     <button id="myBtn" class="myBtn menu-btn" onclick="showList('listaProjetos')">Projetos</button>
@@ -139,9 +142,11 @@
           <tr>
             <td>{{ dados.usuario.username }}</td>
             <td>{{ dados.usuario.departamento }}</td>
-            {% for operacao in dados.operacoes.all %}
-                <td>{{ operacao.nome_operacao }}</td>
-            {%endfor%}
+            {% if dados.ultima_operacao %}
+            <td>{{ dados.ultima_operacao.nome_operacao }}</td>
+            {% else %}
+            <td>Nenhuma operação encontrada</td>
+            {% endif %}
                 <td>{{ dados.numero_operacoes }}</td>
           </tr>
         {% endfor %}
@@ -177,7 +182,7 @@
       });
     });
     $(document).ready(function() {
-  $('#tabelaDepartamentos').DataTable({
+  $('#tabelaUsuarios').DataTable({
     "paging": false,
     "info": false,
     "language": {

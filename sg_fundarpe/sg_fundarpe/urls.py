@@ -13,6 +13,7 @@ urlpatterns = [
     path('asju/', include('home.urls.asju')),
     path('asgo/', include('home.urls.asgo')),
     path('adm/', include('home.urls.adm')), 
-]
+    path('relatorio/pdf/', include('home.urls.pdf')),
+]  
 
     

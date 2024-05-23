@@ -10,7 +10,8 @@
 </head>
 <body>
 
-  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT">
+  <br>
+  <img src="{% static 'images/logomarcafundarpe.png' %}" alt="Logo da UNAT" style="width: 200px; height: 61px;">
 
   <h1>PRESI</h1>
   
@@ -23,15 +24,15 @@
         {% csrf_token %}
   
         <div class="elementos">
-          <label for="browser">Nº do Projeto:</label>
-          <input type="text" list="n_projeto" id="">
-  
-          <datalist  id="n_projeto" name="n_projeto">
-            {% for projeto in projetos %}
-              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
-            {% endfor %}
+          <label for="n_projeto">Nº do Projeto:</label>
+          <input type="text" id="n_projeto" name="n_projeto" list="projetos_datalist">
+      
+          <datalist id="projetos_datalist">
+              {% for projeto in projetos %}
+                  <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+              {% endfor %}
           </datalist>
-        </div>
+      </div>
         
         <div class="elementos">
           <label for="data_operacao">Data assinatura do termo:</label>

@@ -16,6 +16,7 @@ def cadastrar_operacao(request):
     if request.method == 'POST':
         # Obtém os dados do formulário
         n_projeto = request.POST.get('n_projeto')
+        print(n_projeto)  # 
         nome_operacao = request.POST.get('nome_operacao')
         data_operacao = request.POST.get('data_operacao')
         

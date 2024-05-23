@@ -28,14 +28,14 @@
       <form action="{% url 'cadastro_uaff' %}" id="formularioProjeto" method="POST">
         {% csrf_token %}
   
-          <label for="browser">Nº do Projeto:</label>
-          <input type="text" list="n_projeto" id="browser">
-  
-          <datalist id="n_projeto" name="n_projeto">
+        <label for="n_projeto">Nº do Projeto:</label>
+        <input type="text" id="n_projeto" name="n_projeto" list="projetos_datalist">
+        
+        <datalist id="projetos_datalist">
             {% for projeto in projetos %}
-              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+                <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
             {% endfor %}
-          </datalist>
+        </datalist>
   
           <div class="elementos">
             <label for="data_operacao">Data Conferência da Documentação:</label>
@@ -60,14 +60,14 @@
       <form action="{% url 'cadastro_uaff' %}" id="formularioProjeto" method="POST">
         {% csrf_token %}
   
-          <label for="browser">Nº do Projeto:</label>
-          <input type="text" list="n_projeto" id="browser">
-  
-          <datalist  id="n_projeto" name="n_projeto">
+        <label for="n_projeto">Nº do Projeto:</label>
+        <input type="text" id="n_projeto" name="n_projeto" list="projetos_datalist">
+        
+        <datalist id="projetos_datalist">
             {% for projeto in projetos %}
-              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+                <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
             {% endfor %}
-          </datalist>
+        </datalist>
   
           <div class="elementos">
             <label for="data_operacao">Data Envio para Confecção do Termo:</label>
@@ -93,14 +93,14 @@
       <form action="{% url 'cadastro_uaff1' %}" id="formularioProjeto" method="POST">
         {% csrf_token %}
   
-          <label for="browser">Nº do Projeto:</label>
-          <input type="text" list="n_projeto" id="browser">
-  
-          <datalist id="n_projeto" name="n_projeto">
+        <label for="n_projeto">Nº do Projeto:</label>
+        <input type="text" id="n_projeto" name="n_projeto" list="projetos_datalist">
+        
+        <datalist id="projetos_datalist">
             {% for projeto in projetos %}
-              <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
+                <option value="{{ projeto.n_projeto }}">{{ projeto.titulo_projeto }}</option>
             {% endfor %}
-          </datalist>
+        </datalist>
   
   
           <div class="elementos">

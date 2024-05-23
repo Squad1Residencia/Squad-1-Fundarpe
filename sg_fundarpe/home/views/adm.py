@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
-from django.db.models import Count, F
+from django.db.models import Max
 from home.models import Usuario, Projeto, Operacao, Pagamento, Usuario
 from django.http import JsonResponse
 
@@ -17,23 +17,24 @@ def homepage(request):
 # Crie uma lista para armazenar os dados do usuário
     dados_usuario = []
 
-# Para cada usuário, obtenha suas operações e o número total de operações
+# Para cada usuário, obtenha a ultima operações e o número total de operações
     for usuario in Usuario.objects.all():
         operacoes_usuario = operacoes.filter(id_usuario=usuario)
+        ultima_operacao = operacoes_usuario.latest('data_cadastro') if operacoes_usuario.exists() else None
         numero_operacoes = operacoes_usuario.count()
         dados_usuario.append({
             'usuario': usuario,
-            'operacoes': operacoes_usuario,
+            'ultima_operacao': ultima_operacao,
             'numero_operacoes': numero_operacoes,
         })
 
 
  
     # Calcular os dados para os gráficos
-    valor_pago = sum(pagamento.valor_solicitado / pagamento.n_parcelas * pagamento.n_parcelas_pagas for pagamento in pagamentos)
-    valor_a_ser_pago = sum((pagamento.valor_solicitado - (pagamento.valor_solicitado / pagamento.n_parcelas * pagamento.n_parcelas_pagas)) for pagamento in pagamentos)
-    parcelas_concluidas = sum(pagamento.n_parcelas_pagas for pagamento in pagamentos)
-    parcelas_em_andamento = sum(pagamento.n_parcelas - pagamento.n_parcelas_pagas for pagamento in pagamentos)
+    valor_pago = sum(pagamento.valor_solicitado / pagamento.n_parcelas * (pagamento.n_parcelas_pagas if pagamento.n_parcelas_pagas is not None else 0) for pagamento in pagamentos)
+    valor_a_ser_pago = sum((pagamento.valor_solicitado - (pagamento.valor_solicitado / pagamento.n_parcelas * (pagamento.n_parcelas_pagas if pagamento.n_parcelas_pagas is not None else 0))) for pagamento in pagamentos)
+    parcelas_concluidas = sum((pagamento.n_parcelas_pagas if pagamento.n_parcelas_pagas is not None else 0) for pagamento in pagamentos)
+    parcelas_em_andamento = sum(pagamento.n_parcelas - (pagamento.n_parcelas_pagas if pagamento.n_parcelas_pagas is not None else 0) for pagamento in pagamentos)
     projetos_concluidos = pagamentos.filter(status_pagamento='Concluído').count()
     projetos_em_andamento = pagamentos.filter(status_pagamento='Em Andamento').count()
  
@@ -43,6 +44,7 @@ def homepage(request):
         'operacoes': operacoes,
         'projetos': projetos, 
         'pagamentos': pagamentos,
+        'dados_usuario': dados_usuario,  
         'valor_pago': valor_pago,
         'valor_a_ser_pago': valor_a_ser_pago,
         'parcelas_concluidas': parcelas_concluidas,
